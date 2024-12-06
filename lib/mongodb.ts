@@ -6,23 +6,18 @@ if (!MONGO_URI) {
   throw new Error('Please define the MONGO_URI environment variable');
 }
 
-// Create a cached connection variable globally to reuse the connection
-declare global {
-  var mongoose: { conn: Mongoose | null; promise: Promise<Mongoose> | null };
-}
-
-// Initialize cached connection if it doesn't exist
-global.mongoose = global.mongoose || { conn: null, promise: null };
+// Use globalThis to define the global mongoose connection cache
+(globalThis as any).mongoose = (globalThis as any).mongoose || { conn: null, promise: null };
 
 export async function connectToDatabase(): Promise<Mongoose> {
-  if (global.mongoose.conn) {
-    return global.mongoose.conn;
+  if ((globalThis as any).mongoose.conn) {
+    return (globalThis as any).mongoose.conn;
   }
 
-  if (!global.mongoose.promise) {
-    global.mongoose.promise = mongoose.connect(MONGO_URI, {});
+  if (!(globalThis as any).mongoose.promise) {
+    (globalThis as any).mongoose.promise = mongoose.connect(MONGO_URI).then((mongooseInstance) => mongooseInstance);
   }
 
-  global.mongoose.conn = await global.mongoose.promise;
-  return global.mongoose.conn;
+  (globalThis as any).mongoose.conn = await (globalThis as any).mongoose.promise;
+  return (globalThis as any).mongoose.conn;
 }
