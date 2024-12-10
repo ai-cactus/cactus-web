@@ -7,10 +7,10 @@ import { useFormStatus } from "react-dom";
 export function RequestADemoForm() {
   const [state, formAction, isPending] = useActionState(requestADemoAction, null);
   return (
-    <form action={formAction} className="grid grid-cols-2 gap-x-20 gap-y-4 mt-10">
-      <div className="flex-1 flex flex-col gap-10">
-        <h2 className="text-4xl font-medium">Let us score your compliance policy</h2>
-        <p>Submit your information below and let’s get you started</p>
+    <form action={formAction} className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-4 mt-10">
+      <div className="flex-1 flex flex-col gap-4 md:gap-10 mb-10 md:mb-0">
+        <h2 className="text-center md:text-left text-3xl md:text-4xl font-medium">Let us score your compliance policy</h2>
+        <p className="text-center md:text-left">Submit your information below and let’s get you started</p>
       </div>
       <div className="flex-1 flex flex-col gap-4">
         <input
