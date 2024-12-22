@@ -3,7 +3,6 @@
 import { FilledButton } from '@/components/buttons'
 import { InputField } from '@/components/fields'
 import { auth, db } from '@/lib/firebase'
-import { sign } from 'crypto'
 import { createUserWithEmailAndPassword, AuthError, signInWithEmailAndPassword } from 'firebase/auth'
 import { collection, doc, setDoc, FirestoreError } from 'firebase/firestore'
 import { set } from 'mongoose'
@@ -21,10 +20,12 @@ function page() {
     const [zip_code, setZip_code] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
     const [terms_and_conditions, setTerms_and_conditions] = useState(false)
 
     const handleSignup = async (e: any) => {
         e.preventDefault()
+        setLoading(true)
         try {
             let userCredential;
             try {
@@ -43,8 +44,6 @@ function page() {
             const user = userCredential.user
             const response = await fetch("http://localhost:3000/auth/complete-profile",
                 {
-                    // set request mode to no-cors
-                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json',
                         // @ts-ignore
@@ -54,7 +53,7 @@ function page() {
                     body: JSON.stringify({
                         name: `${first_name} ${last_name}`,
                         practice: `${organization}`,
-                        juridiction: `${address}, ${country_state}, ${zip_code}`,
+                        jurisdiction: `${address}, ${country_state}, ${zip_code}`,
                         // email, 
                         // address, 
                         // country_state, 
@@ -64,18 +63,18 @@ function page() {
                     })
                 }
             );
-            console.log(response)
             console.log(user)
+            // console.log("BACKEND: ", response, await response.text(), response.headers)
             if (!response.ok) {
-                setError('An error occurred while creating your account profile. Please try again later with the same email and password. If the problem persists, contact support.')
+                setError('An error occurred while creating your account profile. Please try again later with the same email and password. If the problem persists, contact support. \n Error: ' + await response.text())
             } else {
-                // @ts-ignore
-                console.log(user.accessToken)
+                // Display a success message
                 alert('Account created successfully')
             }
         } catch (error) {
             setError((error as AuthError | FirestoreError).message)
         }
+        setLoading(false)
     }
 
     return (
@@ -87,7 +86,7 @@ function page() {
                 <div className='flex flex-row gap-4'>
                     <InputField
                         id='first_name'
-                        labelText='First Name'
+                        labeltext='First Name'
                         name="first_name"
                         placeholder='eg. John'
                         value={first_name}
@@ -96,7 +95,7 @@ function page() {
                     />
                     <InputField
                         id='last_name'
-                        labelText='Last Name'
+                        labeltext='Last Name'
                         name="last_name"
                         placeholder='eg. Wick'
                         value={last_name}
@@ -106,7 +105,7 @@ function page() {
                 </div>
                 <InputField
                     id='organization'
-                    labelText='Organization Name'
+                    labeltext='Organization Name'
                     name="organization"
                     placeholder='eg. johnfrans@gmail.com'
                     value={organization}
@@ -115,7 +114,7 @@ function page() {
                 />
                 <InputField
                     id='email'
-                    labelText='Email'
+                    labeltext='Email'
                     type='email'
                     name="email"
                     placeholder='eg. johnfrans@gmail.com'
@@ -125,7 +124,7 @@ function page() {
                 />
                 <InputField
                     id='address'
-                    labelText='Address'
+                    labeltext='Address'
                     name="address"
                     placeholder='eg. johnfrans@gmail.com'
                     value={address}
@@ -135,7 +134,7 @@ function page() {
                 <div className='flex flex-row gap-4'>
                     <InputField
                         id='state'
-                        labelText='State'
+                        labeltext='State'
                         name="state"
                         placeholder=''
                         value={country_state}
@@ -144,7 +143,7 @@ function page() {
                     />
                     <InputField
                         id='zip_code'
-                        labelText='Zip Code'
+                        labeltext='Zip Code'
                         name="zip_code"
                         placeholder='XXXXXX'
                         value={zip_code}
@@ -154,7 +153,7 @@ function page() {
                 </div>
                 <InputField
                     id="password"
-                    labelText='Password'
+                    labeltext='Password'
                     type="password"
                     name="password"
                     placeholder='••••••'
@@ -175,7 +174,7 @@ function page() {
                 </div>
                 <div>
                     {error && <p className='text-red-500 text-sm font-semibold mb-2'>{error}</p>}
-                    <FilledButton className='w-full' type='submit' disabled={!terms_and_conditions}>Sign Up</FilledButton>
+                    <FilledButton className='w-full' type='submit' disabled={!terms_and_conditions}>{loading ? '•••' : 'Sign Up'}</FilledButton>
                 </div>
                 <p className="text-center text-[#4b4b4b] text-base font-normal">You have an account? <Link href={"/login"} className="text-[#4b62cc] text-base font-bold">Login</Link></p>
             </form>

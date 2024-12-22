@@ -12,18 +12,20 @@ function page() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const handleLogin = async (e: any) => {
         e.preventDefault()
-        if (email === '' || password === '') {
-            return
-        }
+        setLoading(true)
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            // TODO: route to dashboard
+            alert('Logged in successfully')
         } catch (error) {
             setError((error as AuthError).message);
             console.log(error);
         }
+        setLoading(false)
     }
 
     return (
@@ -33,16 +35,18 @@ function page() {
             <p className="text-[#4b4b4b] text-base font-normal text-center">Welcome back! Please enter your details</p>
             <form onSubmit={handleLogin} className='mt-6 max-w-96 w-full mx-auto flex flex-col gap-6'>
                 <InputField
+                    required
                     id='email'
-                    labelText='Email'
+                    labeltext='Email'
                     name="email"
                     type='email'
                     placeholder='eg. johnfrans@gmail.com'
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <InputField
+                    required
                     id="password"
-                    labelText='Password'
+                    labeltext='Password'
                     type="password"
                     name="password"
                     placeholder='••••••'
@@ -57,7 +61,7 @@ function page() {
                 </div>
                 <div>
                     {error && <p className='text-red-500 text-sm font-semibold mb-2'>{error}</p>}
-                    <FilledButton className='w-full' type='submit'>Login</FilledButton>
+                    <FilledButton className='w-full' type='submit'>{loading ? '•••' : 'Login'}</FilledButton>
                 </div>
                 <button className="py-3 px-5 rounded-xl border border-[#c5c5c5] justify-center items-center gap-[15px] inline-flex">
                     <Image src={"/Google.svg"} alt='icon' width={28} height={28} className="w-7 h-7 relative" />
