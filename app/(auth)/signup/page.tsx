@@ -3,8 +3,10 @@
 import { FilledButton } from '@/components/buttons'
 import { InputField } from '@/components/fields'
 import { auth, db } from '@/lib/firebase'
-import { createUserWithEmailAndPassword, AuthError } from 'firebase/auth'
+import { sign } from 'crypto'
+import { createUserWithEmailAndPassword, AuthError, signInWithEmailAndPassword } from 'firebase/auth'
 import { collection, doc, setDoc, FirestoreError } from 'firebase/firestore'
+import { set } from 'mongoose'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
@@ -19,24 +21,58 @@ function page() {
     const [zip_code, setZip_code] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const [terms_and_conditions, setTerms_and_conditions] = useState(false)
 
     const handleSignup = async (e: any) => {
         e.preventDefault()
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+            let userCredential;
+            try {
+               userCredential = await createUserWithEmailAndPassword(auth, email, password)
+            } catch (error) {
+                const _error = (error as AuthError)
+                if (_error.code === 'auth/email-already-in-use') {
+                    // If the email is already in use, sign in with the email and password
+                    // This will allow the user to complete their profile
+                    userCredential = await signInWithEmailAndPassword(auth, email, password)
+                } else {
+                    // If the error is not email-already-in-use, rethrow the error
+                    throw error;
+                }
+            }
             const user = userCredential.user
-            // await setDoc(doc(collection(db, 'users'), user.uid), {
-            //     first_name,
-            //     last_name,
-            //     organization,
-            //     email,
-            //     address,
-            //     country_state,
-            //     zip_code,
-            //     role: null,
-            //     isVerified: false
-            // })
+            const response = await fetch("http://localhost:3000/auth/complete-profile",
+                {
+                    // set request mode to no-cors
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // @ts-ignore
+                        'authorization': `Bearer ${user.accessToken}`
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        name: `${first_name} ${last_name}`,
+                        practice: `${organization}`,
+                        juridiction: `${address}, ${country_state}, ${zip_code}`,
+                        // email, 
+                        // address, 
+                        // country_state, 
+                        // zip_code, 
+                        // role: null, 
+                        // isVerified: false, 
+                    })
+                }
+            );
+            console.log(response)
             console.log(user)
+            if (!response.ok) {
+                setError('An error occurred while creating your account profile. Please try again later with the same email and password. If the problem persists, contact support.')
+            } else {
+                // @ts-ignore
+                console.log(user.accessToken)
+                alert('Account created successfully')
+            }
         } catch (error) {
             setError((error as AuthError | FirestoreError).message)
         }
@@ -128,13 +164,18 @@ function page() {
                 />
                 <div className='flex flex-row justify-between mb-10'>
                     <div className='flex flex-row gap-1 items-center'>
-                        <input type="checkbox" name="terms_and_conditions" id="terms_and_conditions" />
+                        <input type="checkbox"
+                            name="terms_and_conditions"
+                            id="terms_and_conditions"
+                            checked={terms_and_conditions}
+                            onChange={(e) => setTerms_and_conditions(e.target.checked)}
+                        />
                         <label htmlFor="terms_and_conditions" className='text-sm font-semibold'>Yes,  I understand and agree to the <Link href="" className='text-[#4b62cc] font-semibold whitespace-nowrap'>Cactus Terms of Service</Link></label>
                     </div>
                 </div>
                 <div>
                     {error && <p className='text-red-500 text-sm font-semibold mb-2'>{error}</p>}
-                    <FilledButton className='w-full' type='submit'>Sign Up</FilledButton>
+                    <FilledButton className='w-full' type='submit' disabled={!terms_and_conditions}>Sign Up</FilledButton>
                 </div>
                 <p className="text-center text-[#4b4b4b] text-base font-normal">You have an account? <Link href={"/login"} className="text-[#4b62cc] text-base font-bold">Login</Link></p>
             </form>
