@@ -1,14 +1,17 @@
 'use client'
 
-import { FilledButton } from '@/components/buttons'
+import { FilledButton, GoogleAuthButton } from '@/components/buttons'
 import { InputField } from '@/components/fields'
+import { signIn, signInWithGoogle } from '@/lib/auth'
 import { auth } from '@/lib/firebase'
-import { signInWithEmailAndPassword, AuthError } from 'firebase/auth'
+import { signInWithEmailAndPassword, AuthError, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 function page() {
+    const router = useRouter();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
@@ -18,9 +21,9 @@ function page() {
         e.preventDefault()
         setLoading(true)
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = await signIn(email, password);
             // TODO: route to dashboard
-            alert('Logged in successfully')
+            router.push('/dashboard')
         } catch (error) {
             setError((error as AuthError).message);
             console.log(error);
@@ -63,10 +66,7 @@ function page() {
                     {error && <p className='text-red-500 text-sm font-semibold mb-2'>{error}</p>}
                     <FilledButton className='w-full' type='submit'>{loading ? '•••' : 'Login'}</FilledButton>
                 </div>
-                <button className="py-3 px-5 rounded-xl border border-[#c5c5c5] justify-center items-center gap-[15px] inline-flex">
-                    <Image src={"/Google.svg"} alt='icon' width={28} height={28} className="w-7 h-7 relative" />
-                    <span className="text-[#2b2b2b] text-base font-semibold">Continue with Google</span>
-                </button>
+                <GoogleAuthButton />
                 <p className="text-center text-[#4b4b4b] text-base font-normal">Don’t have an account? <Link href={"/signup"} className="text-[#4b62cc] text-base font-bold">Sign Up</Link></p>
             </form>
         </div>

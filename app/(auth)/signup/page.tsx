@@ -1,23 +1,21 @@
 'use client'
 
-import { FilledButton } from '@/components/buttons'
+import { FilledButton, GoogleAuthButton } from '@/components/buttons'
 import { InputField } from '@/components/fields'
-import { auth, db } from '@/lib/firebase'
-import { createUserWithEmailAndPassword, AuthError, signInWithEmailAndPassword } from 'firebase/auth'
-import { collection, doc, setDoc, FirestoreError } from 'firebase/firestore'
-import { set } from 'mongoose'
+import { signUp } from '@/lib/auth'
+import { AuthError, User } from 'firebase/auth'
+import { FirestoreError } from 'firebase/firestore'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
 
+import { useRouter } from 'next/navigation'
+
 function page() {
+    const router = useRouter();
     const [first_name, setFirst_name] = useState('')
     const [last_name, setLast_name] = useState('')
-    const [organization, setOrganization] = useState('')
     const [email, setEmail] = useState('')
-    const [address, setAddress] = useState('')
-    const [country_state, setCountry_state] = useState('')
-    const [zip_code, setZip_code] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
@@ -27,50 +25,22 @@ function page() {
         e.preventDefault()
         setLoading(true)
         try {
-            let userCredential;
-            try {
-               userCredential = await createUserWithEmailAndPassword(auth, email, password)
-            } catch (error) {
-                const _error = (error as AuthError)
-                if (_error.code === 'auth/email-already-in-use') {
-                    // If the email is already in use, sign in with the email and password
-                    // This will allow the user to complete their profile
-                    userCredential = await signInWithEmailAndPassword(auth, email, password)
-                } else {
-                    // If the error is not email-already-in-use, rethrow the error
-                    throw error;
-                }
-            }
-            const user = userCredential.user
-            const response = await fetch("http://localhost:3000/auth/complete-profile",
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // @ts-ignore
-                        'authorization': `Bearer ${user.accessToken}`
-                    },
-                    method: 'POST',
-                    body: JSON.stringify({
-                        name: `${first_name} ${last_name}`,
-                        practice: `${organization}`,
-                        jurisdiction: `${address}, ${country_state}, ${zip_code}`,
-                        // email, 
-                        // address, 
-                        // country_state, 
-                        // zip_code, 
-                        // role: null, 
-                        // isVerified: false, 
-                    })
-                }
-            );
+            let user: User = await signUp(email, password, `${first_name} ${last_name}`)
+            // try {
+            //    user = 
+            // } catch (error) {
+            //     const _error = (error as AuthError)
+            //     if (_error.code === 'auth/email-already-in-use') {
+            //         // If the email is already in use, sign in with the email and password
+            //         // This will allow the user to complete their profile
+            //         user = await signIn(email, password)
+            //     } else {
+            //         // If the error is not email-already-in-use, rethrow the error
+            //         throw error;
+            //     }
+            // }
             console.log(user)
-            // console.log("BACKEND: ", response, await response.text(), response.headers)
-            if (!response.ok) {
-                setError('An error occurred while creating your account profile. Please try again later with the same email and password. If the problem persists, contact support. \n Error: ' + await response.text())
-            } else {
-                // Display a success message
-                alert('Account created successfully')
-            }
+            router.push('/signup/complete')
         } catch (error) {
             setError((error as AuthError | FirestoreError).message)
         }
@@ -104,15 +74,6 @@ function page() {
                     />
                 </div>
                 <InputField
-                    id='organization'
-                    labeltext='Organization Name'
-                    name="organization"
-                    placeholder='eg. johnfrans@gmail.com'
-                    value={organization}
-                    onChange={(e) => setOrganization(e.target.value)}
-                    required
-                />
-                <InputField
                     id='email'
                     labeltext='Email'
                     type='email'
@@ -122,35 +83,6 @@ function page() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
-                <InputField
-                    id='address'
-                    labeltext='Address'
-                    name="address"
-                    placeholder='eg. johnfrans@gmail.com'
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    required
-                />
-                <div className='flex flex-row gap-4'>
-                    <InputField
-                        id='state'
-                        labeltext='State'
-                        name="state"
-                        placeholder=''
-                        value={country_state}
-                        onChange={(e) => setCountry_state(e.target.value)}
-                        required
-                    />
-                    <InputField
-                        id='zip_code'
-                        labeltext='Zip Code'
-                        name="zip_code"
-                        placeholder='XXXXXX'
-                        value={zip_code}
-                        onChange={(e) => setZip_code(e.target.value)}
-                        required
-                    />
-                </div>
                 <InputField
                     id="password"
                     labeltext='Password'
@@ -176,6 +108,7 @@ function page() {
                     {error && <p className='text-red-500 text-sm font-semibold mb-2'>{error}</p>}
                     <FilledButton className='w-full' type='submit' disabled={!terms_and_conditions}>{loading ? '•••' : 'Sign Up'}</FilledButton>
                 </div>
+                <GoogleAuthButton role='signup' />
                 <p className="text-center text-[#4b4b4b] text-base font-normal">You have an account? <Link href={"/login"} className="text-[#4b62cc] text-base font-bold">Login</Link></p>
             </form>
         </div>

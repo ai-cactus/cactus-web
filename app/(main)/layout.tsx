@@ -1,3 +1,6 @@
+'use client'
+
+import withAuth from '@/lib/withAuth';
 import Image from 'next/image';
 import React from 'react'
 
@@ -22,4 +25,4 @@ function layout({
     )
 }
 
-export default layout
+export default withAuth(layout);
