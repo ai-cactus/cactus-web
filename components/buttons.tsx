@@ -1,6 +1,7 @@
 import { signInWithGoogle } from "@/lib/auth";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link, { LinkProps } from "next/link";
+import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 import { DetailedHTMLProps } from "react";
 
 export function FilledButton(props: DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) {
@@ -31,4 +32,24 @@ export function GoogleAuthButton({ role = "login" }: { role?: "login" | "signup"
             <span className="text-[#2b2b2b] text-base font-semibold">Continue with Google</span>
         </button>
     )
+}
+
+
+interface NavButtonProps extends LinkProps {
+    href: string,
+    label: string,
+    icon: string,
+    className?: string
+}
+
+export const NavButton = (props: NavButtonProps) => {
+    const segment = useSelectedLayoutSegment()
+    return (
+        <Link {...props} className={`flex flex-row items-center px-4 py-4 gap-4 font-medium
+        ${props.href.substring(1).startsWith(segment!) ? 'text-black' : 'text-[#757575]'} ${props.className}`}
+        >
+            <Image src={props.icon} alt={props.label} width={24} height={24} className='w-4' />
+            {props.label}
+        </Link>
+    );
 }
