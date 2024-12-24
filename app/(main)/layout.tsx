@@ -2,10 +2,9 @@
 
 import { NavButton } from '@/components/buttons';
 import { MainNav } from '@/components/navs';
+import { logOut } from '@/lib/auth';
 import withAuth from '@/lib/withAuth';
 import Image from 'next/image';
-import Link, { LinkProps } from 'next/link';
-import { useSelectedLayoutSegment } from 'next/navigation';
 import React from 'react'
 
 function layout({
@@ -30,7 +29,7 @@ function layout({
                         <h3 className="mb-2 text-[#757575] text-xs font-medium font-['Inter'] uppercase leading-3 tracking-wide">Help & Settings</h3>
                         <nav className='flex flex-col'>
                             {secondaryNav.map((item, key) => <NavButton key={key} href={item.href} icon={item.icon} label={item.label} />)}
-                            <NavButton href={"#"} icon={"/exit_ic.svg"} label={"Settings"} className='text-[#D55F5A]' />
+                            <NavButton href={"#"} onClick={logOut} icon={"/exit_ic.svg"} label={"Logout"} className='text-[#D55F5A]' />
                         </nav>
                     </section>
                 </div>
