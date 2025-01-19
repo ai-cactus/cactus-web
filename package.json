@@ -10,11 +10,18 @@
   },
   "dependencies": {
     "@types/mongoose": "^5.11.96",
+    "@udecode/cn": "^42.0.0",
+    "@udecode/plate": "^42.0.1",
+    "@udecode/plate-basic-marks": "^42.0.0",
+    "@udecode/plate-block-quote": "^42.0.0",
+    "@udecode/plate-heading": "^42.0.0",
     "firebase": "^11.1.0",
     "mongoose": "^8.8.3",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106"
+    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "slate-history": "^0.110.3",
+    "slate-react": "^0.112.0"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -12,17 +12,17 @@ interface WithAuthProps {
 
 const withAuth = <P extends object>(WrappedComponent: ComponentType<P>): React.FC<P & WithAuthProps> => {
   const ComponentWithAuth = (props: P) => {
-    const { user, loading } = useAuthState();
+    const { auth, loading } = useAuthState();
     const router = useRouter();
 
     useEffect(() => {
-      if (!loading && !user) {
+      if (!loading && !auth.user) {
         router.push('/login');
       }
-    }, [loading, user]);
+    }, [loading, auth.user]);
 
     if (loading) return <LoadingModal />;
-    return user ? <WrappedComponent {...props} /> : null;
+    return auth.user ? <WrappedComponent {...props} /> : null;
   };
 
   return ComponentWithAuth;

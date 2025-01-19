@@ -79,7 +79,7 @@ export function LandingFooterNav() {
 export function MainNav() {
     const {user} = useAuthState()
     return (
-        <nav className='sticky h-16 top-0 flex flex-row items-center gap-10 px-10 bg-white border-b border-b-[#1C1C1C1A]'>
+        <nav className='sticky z-30 h-16 top-0 flex flex-row items-center gap-10 px-10 bg-white border-b border-b-[#1C1C1C1A]'>
             <form action="" className='flex-1 flex flex-row bg-[#F2F5F8] rounded-lg h-10 gap-4 px-5'>
                 <button type='submit'>
                     <Image src={"/search_ic.svg"} alt='search icon' width={24} height={24} />

@@ -1,6 +1,6 @@
 'use client'
 
-import { NavButton } from '@/components/buttons';
+import { NavButton, NavButtonProps } from '@/components/buttons';
 import { MainNav } from '@/components/navs';
 import { logOut } from '@/lib/auth';
 import withAuth from '@/lib/withAuth';
@@ -28,7 +28,7 @@ function layout({
                     <section>
                         <h3 className="mb-2 text-[#757575] text-xs font-medium font-['Inter'] uppercase leading-3 tracking-wide">Help & Settings</h3>
                         <nav className='flex flex-col'>
-                            {secondaryNav.map((item, key) => <NavButton key={key} href={item.href} icon={item.icon} label={item.label} />)}
+                            {secondaryNav.map((item, key) => <NavButton key={key} href={item.href} icon={item.icon} label={item.label} routes={item.routes} />)}
                             <NavButton href={"#"} onClick={logOut} icon={"/exit_ic.svg"} label={"Logout"} className='text-[#D55F5A]' />
                         </nav>
                     </section>
@@ -36,7 +36,7 @@ function layout({
             </aside>
             <div className='ml-72 relative'>
                 <MainNav />
-                <main>{children}</main>
+                <main className='min-h-[calc(100vh-64px)]'>{children}</main>
             </div>
         </div>
     )
@@ -63,11 +63,18 @@ const primaryNav = [
     },
 ]
 
-const secondaryNav = [
+const secondaryNav: NavButtonProps[] = [
     {
         icon: "/settings_ic.svg",
         label: "Settings",
-        href: "/settings",
+        href: "#",
+        routes: [
+            {
+                icon: "/profile-circle.svg",
+                label: "Profile",
+                href: "/profile",
+            },
+        ]
     },
     {
         icon: "/help_center_ic.svg",

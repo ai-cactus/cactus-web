@@ -15,10 +15,8 @@ function page() {
     const {user, loading: authLoading} = useAuthState()
     const router = useRouter();
 
-    const [organization, setOrganization] = useState('')
-    const [address, setAddress] = useState('')
-    const [country_state, setCountry_state] = useState('')
-    const [zip_code, setZip_code] = useState('')
+    const [practice, setPractice] = useState('')
+    const [jurisdiction, setJurisdiction] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const [terms_and_conditions, setTerms_and_conditions] = useState(false)
@@ -37,8 +35,8 @@ function page() {
                     method: 'POST',
                     body: JSON.stringify({
                         name: user!.displayName,
-                        practice: organization,
-                        jurisdiction: `${address}, ${country_state}, ${zip_code}`,
+                        practice: practice,
+                        jurisdiction: jurisdiction,
                     })
                 }
             );
@@ -65,43 +63,23 @@ function page() {
             <p className="text-[#4b4b4b] text-base font-normal text-center">Enter your personal data to complete your account.</p>
             <form onSubmit={completeProfile} className='mt-6 max-w-96 w-full mx-auto flex flex-col gap-6'>
                 <InputField
-                    id='organization'
-                    labeltext='Organization Name'
-                    name="organization"
-                    placeholder='eg. johnfrans@gmail.com'
-                    value={organization}
-                    onChange={(e) => setOrganization(e.target.value)}
+                    id='practice'
+                    labeltext='Practice'
+                    name="practice"
+                    placeholder='eg. Health Care'
+                    value={practice}
+                    onChange={(e) => setPractice(e.target.value)}
                     required
                 />
                 <InputField
-                    id='address'
-                    labeltext='Address'
-                    name="address"
-                    placeholder='eg. johnfrans@gmail.com'
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
+                    id='jurisdiction'
+                    labeltext='Jurisdiction'
+                    name="jurisdiction"
+                    placeholder='eg. Califonia, USA'
+                    value={jurisdiction}
+                    onChange={(e) => setJurisdiction(e.target.value)}
                     required
                 />
-                <div className='flex flex-row gap-4'>
-                    <InputField
-                        id='state'
-                        labeltext='State'
-                        name="state"
-                        placeholder=''
-                        value={country_state}
-                        onChange={(e) => setCountry_state(e.target.value)}
-                        required
-                    />
-                    <InputField
-                        id='zip_code'
-                        labeltext='Zip Code'
-                        name="zip_code"
-                        placeholder='XXXXXX'
-                        value={zip_code}
-                        onChange={(e) => setZip_code(e.target.value)}
-                        required
-                    />
-                </div>
                 <div className='flex flex-row justify-between mb-10'>
                     <div className='flex flex-row gap-1 items-center'>
                         <input type="checkbox"

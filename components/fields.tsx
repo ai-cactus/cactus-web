@@ -6,7 +6,7 @@ interface InputFieldProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInpu
 
 export function InputField(props: InputFieldProps) {
     return (
-        <div className='flex flex-col gap-1'>
+        <div className={`flex flex-col gap-1 ${props.className}`}>
             <label htmlFor={props.id}>{props.labeltext}</label>
             <input
                 {...props}
