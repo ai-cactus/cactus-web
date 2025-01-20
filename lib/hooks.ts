@@ -22,7 +22,7 @@ export const useFetch = <DATA = any, ERROR = any>(input: string) => {
                 headers: {
                     ...init?.headers,
                     // @ts-ignore
-                    authorization: `Bearer ${await user?.accessToken}`,
+                    authorization: `Bearer ${auth.user?.accessToken}`,
                 },
             });
             console.log(response.status)

@@ -12,7 +12,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 function page() {
-    const {user, loading: authLoading} = useAuthState()
+    const {auth, loading: authLoading} = useAuthState()
     const router = useRouter();
 
     const [practice, setPractice] = useState('')
@@ -25,16 +25,16 @@ function page() {
         e.preventDefault()
         setLoading(true)
         try {
-            const response = await fetch("http://localhost:3000/auth/complete-profile",
+            const response = await fetch("http://localhost:3000/auth/profile",
                 {
                     headers: {
                         'Content-Type': 'application/json',
                         // @ts-ignore
-                        'authorization': `Bearer ${user.accessToken}`
+                        'authorization': `Bearer ${auth.user.accessToken}`
                     },
                     method: 'POST',
                     body: JSON.stringify({
-                        name: user!.displayName,
+                        name: auth.user!.displayName,
                         practice: practice,
                         jurisdiction: jurisdiction,
                     })

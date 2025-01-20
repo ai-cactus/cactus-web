@@ -77,7 +77,8 @@ export function LandingFooterNav() {
 }
 
 export function MainNav() {
-    const {user} = useAuthState()
+    const {auth} = useAuthState()
+    console.log(auth.profile)
     return (
         <nav className='sticky z-30 h-16 top-0 flex flex-row items-center gap-10 px-10 bg-white border-b border-b-[#1C1C1C1A]'>
             <form action="" className='flex-1 flex flex-row bg-[#F2F5F8] rounded-lg h-10 gap-4 px-5'>
@@ -99,8 +100,8 @@ export function MainNav() {
             <div className='flex flex-row items-center gap-2'>
                 <Image src={"/avatar.png"} alt='search icon' width={48} height={48} className='rounded-full w-11 h-11' />
                 <div className='max-w-32'>
-                    <h3 className='text-xs uppercase'>Health compliance</h3>
-                    <h2 className='text-sm font-semibold'>{user?.displayName}</h2>
+                    <h3 className='text-xs uppercase'>{auth.profile?.practice}</h3>
+                    <h2 className='text-sm font-semibold'>{auth.user?.displayName}</h2>
                 </div>
             </div>
         </nav>

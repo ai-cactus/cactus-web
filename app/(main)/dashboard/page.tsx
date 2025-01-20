@@ -69,8 +69,8 @@ function page() {
 
   useEffect(() => {
     if (status === 'success' && data && file) {
-      console.log((data))
-      router.push(`${(data as ComplianceDocumentType).userPolicyId}/results/`);
+      console.log("Response", data)
+      // router.push(`${(data as ComplianceDocumentType).userPolicyId}/results/`);
     }
   }, [status, data, file])
 
