@@ -3,16 +3,20 @@
 import { NavButton, NavButtonProps } from '@/components/buttons';
 import { MainNav } from '@/components/navs';
 import { logOut } from '@/lib/auth';
+import { UploadedDocumentContext } from '@/lib/context';
+import { DocumentResponse } from '@/lib/types';
 import withAuth from '@/lib/withAuth';
 import Image from 'next/image';
-import React from 'react'
+import React, { useState } from 'react'
 
 function layout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const [documents, setDocuments] = useState<DocumentResponse[]>([])
     return (
+        <UploadedDocumentContext.Provider value={{documents, setDocuments}}>
         <div className=''>
             <aside className='flex flex-col fixed top-0 bottom-0 w-72 bg-[#fdfdfd] border-r border-r-[#1C1C1C1A]'>
                 <header className='bg-white h-16 flex items-center justify-center'>
@@ -39,6 +43,7 @@ function layout({
                 <main className='min-h-[calc(100vh-64px)]'>{children}</main>
             </div>
         </div>
+        </UploadedDocumentContext.Provider>
     )
 }
 

@@ -1,11 +1,12 @@
 'use client'
 import { FilledButton, OutlinedButton } from '@/components/buttons';
 import { ErrorModal, LoadingCircleModal } from '@/components/modals';
+import { UploadedDocumentContext } from '@/lib/context';
 import { useFetch } from '@/lib/hooks';
-import { ComplianceDocumentType } from '@/lib/types';
+import { ComplianceDocumentType, DocumentResponse } from '@/lib/types';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 function page() {
   const router = useRouter()
@@ -13,6 +14,7 @@ function page() {
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { go, status, error: uploadError, data } = useFetch('/documents/upload');
+  const {setDocuments} = useContext(UploadedDocumentContext);
 
   const validExtensions = ['.pdf', '.docx', '.doc', '.txt', '.rtf'];
   const invalidFileMesssage = `Invalid file format. Only ${validExtensions.join(', ')} files are allowed.`;
@@ -70,7 +72,8 @@ function page() {
   useEffect(() => {
     if (status === 'success' && data && file) {
       console.log("Response", data)
-      // router.push(`${(data as ComplianceDocumentType).userPolicyId}/results/`);
+      setDocuments((prev: DocumentResponse[]) => [...prev, data as DocumentResponse]);
+      router.push(`/plate-editor/`);
     }
   }, [status, data, file])
 

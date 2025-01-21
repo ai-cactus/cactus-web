@@ -29,3 +29,20 @@ export type Profile = {
     role? : string,
     createdAt?: string,
 }
+
+export type DocumentResponse = {
+    createdAt: string,
+fileName: string,
+fileSize: number,
+fileUrl: string,
+jurisdiction: string,
+metadata: {uploadedAt: string}
+mimeType: string,
+practice: string,
+storagePath: string,
+totalPages: number,
+updatedAt: string,
+userId: string,
+__v: number,
+_id: string,
+}
