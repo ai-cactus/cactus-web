@@ -40,7 +40,7 @@ function layout({
             </aside>
             <div className='ml-72 relative'>
                 <MainNav />
-                <main className='min-h-[calc(100vh-64px)]'>{children}</main>
+                <main className='min-h-[calc(100vh-64px)] flex *:flex-1'>{children}</main>
             </div>
         </div>
         </UploadedDocumentContext.Provider>

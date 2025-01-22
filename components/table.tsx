@@ -3,6 +3,9 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { FilledButton, OutlinedButton } from "./buttons";
 import Image from "next/image";
+import { DocumentResponse } from "@/lib/types";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export type Document = {
     id: number,
@@ -22,10 +25,11 @@ export const Table = ({ children, className }: { children: ReactNode, className?
 };
 
 
-export const TableRow = ({ item }: { item: Document }) => {
+export const TableRow = ({ item }: { item: DocumentResponse }) => {
     const [editMode, setEditMode] = useState(false)
     const [menuIsActive, setMenuIsActive] = useState(false)
     const menuRef = useRef<HTMLDivElement>(null);
+    const router = useRouter()
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -54,16 +58,16 @@ export const TableRow = ({ item }: { item: Document }) => {
                 />
                 <input
                     type="text"
-                    defaultValue={item.title}
+                    defaultValue={item.fileName}
                     disabled={!editMode}
                     className="outline-none disabled:border-none border-2 border-black rounded bg-transparent text-black/70 font-semibold text-sm w-full"
                     onKeyDown={(e) => e.key === 'Enter' && setEditMode(false)}
                 />
             </div>
-            <div className='text-sm w-24'>{item.file_size}</div>
-            <div className='text-sm w-24'>{item.date}</div>
+            <div className='text-sm w-24'>{item.fileSize}</div>
+            <div className='text-sm w-24'>{item.createdAt}</div>
             <div className='relative text-sm flex-1 flex flex-row gap-5 items-center justify-end'>
-                <FilledButton className='py-1 px-4 min-w-0 flex flex-row gap-1 items-center'><Image src='/chat-lines.svg' alt='analyze' width={24} height={24} className='h-6 w-auto' />Analyze</FilledButton>
+                <FilledButton onClick={() => router.push(`/documents/${item._id}`)} className='py-1 px-4 min-w-0 flex flex-row gap-1 items-center'><Image src='/chat-lines.svg' alt='analyze' width={24} height={24} className='h-6 w-auto' />Analyze</FilledButton>
                 <OutlinedButton className='py-1 px-4 text-[#4b62cc] border-[#4b62cc]'>Details</OutlinedButton>
                 <button onClick={() => setMenuIsActive(true)} className="px-4"><Image src="/menu.svg" alt='menu' width={24} height={24} className='h-6 w-auto' /></button>
                 <div ref={menuRef} className="absolute top-0 right-0 z-20 bg-white rounded-lg shadow-lg p-2 space-y-2" style={{ display: menuIsActive ? 'block' : 'none' }}>

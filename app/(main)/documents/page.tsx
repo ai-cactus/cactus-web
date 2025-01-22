@@ -1,10 +1,14 @@
+'use client'
+
 import { FilledButton, OutlinedButton } from '@/components/buttons'
-import { Document, Table, TableRow } from '@/components/table';
+import { Table, TableRow } from '@/components/table';
+import { UploadedDocumentContext } from '@/lib/context';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { ReactNode } from 'react'
+import React, { useContext } from 'react'
 
 function page() {
+    const {documents} = useContext(UploadedDocumentContext);
     return (
         <div className='px-10 py-5'>
             <section className='flex flex-row gap-4 justify-between items-center'>
@@ -21,7 +25,7 @@ function page() {
                 <section className='flex flex-row gap-2 text-black/70 font-semibold'>
                     <div className='flex-1 flex flex-row gap-1 items-end'>Document name <Image src='/filter_ic.svg' alt='filter' width={18} height={18} /></div>
                     <div className='w-24 flex flex-row gap-1 items-end'>File size <Image src='/filter_ic.svg' alt='filter' width={18} height={18} /></div>
-                    <div className='w-24 flex flex-row gap-1 items-end'>Company <Image src='/filter_ic.svg' alt='filter' width={18} height={18} /></div>
+                    <div className='w-24 flex flex-row gap-1 items-end'>Date <Image src='/filter_ic.svg' alt='filter' width={18} height={18} /></div>
                     <div className='flex-1 flex flex-row gap-1 items-end'></div>
                 </section>
                 {...documents.map((doc, i) => <TableRow key={i} item={doc} />)}
@@ -34,77 +38,77 @@ export default page
 
 
 
-const documents: Document[] = [
-    {
-        id: 1,
-        title: "Health-compliance-document.pdf",
-        file_size: "1.2 MB",
-        date: "Jan 12, 2022",
-    },
-    {
-        id: 2,
-        title: "Policy_Handbook_2025.pdf",
-        file_size: "256 KB",
-        date: "Jul 12, 2023",
-    },
-    {
-        id: 3,
-        title: "Health-compliance-document.pdf",
-        file_size: "1.2 MB",
-        date: "Jan 12, 2022",
-    },
-    {
-        id: 4,
-        title: "Policy_Handbook_2025.pdf",
-        file_size: "256 KB",
-        date: "Jul 12, 2023",
-    },
-    {
-        id: 5,
-        title: "Health-compliance-document.pdf",
-        file_size: "1.2 MB",
-        date: "Jan 12, 2022",
-    },
-    {
-        id: 6,
-        title: "Policy_Handbook_2025.pdf",
-        file_size: "256 KB",
-        date: "Jul 12, 2023",
-    },
-    {
-        id: 7,
-        title: "Health-compliance-document.pdf",
-        file_size: "1.2 MB",
-        date: "Jan 12, 2022",
-    },
-    {
-        id: 8,
-        title: "Policy_Handbook_2025.pdf",
-        file_size: "256 KB",
-        date: "Jul 12, 2023",
-    },
-    {
-        id: 9,
-        title: "Health-compliance-document.pdf",
-        file_size: "1.2 MB",
-        date: "Jan 12, 2022",
-    },
-    {
-        id: 10,
-        title: "Policy_Handbook_2025.pdf",
-        file_size: "256 KB",
-        date: "Jul 12, 2023",
-    },
-    {
-        id: 11,
-        title: "Health-compliance-document.pdf",
-        file_size: "1.2 MB",
-        date: "Jan 12, 2022",
-    },
-    {
-        id: 12,
-        title: "Policy_Handbook_2025.pdf",
-        file_size: "256 KB",
-        date: "Jul 12, 2023",
-    },
-]
+// const documents: Document[] = [
+//     {
+//         id: 1,
+//         title: "Health-compliance-document.pdf",
+//         file_size: "1.2 MB",
+//         date: "Jan 12, 2022",
+//     },
+//     {
+//         id: 2,
+//         title: "Policy_Handbook_2025.pdf",
+//         file_size: "256 KB",
+//         date: "Jul 12, 2023",
+//     },
+//     {
+//         id: 3,
+//         title: "Health-compliance-document.pdf",
+//         file_size: "1.2 MB",
+//         date: "Jan 12, 2022",
+//     },
+//     {
+//         id: 4,
+//         title: "Policy_Handbook_2025.pdf",
+//         file_size: "256 KB",
+//         date: "Jul 12, 2023",
+//     },
+//     {
+//         id: 5,
+//         title: "Health-compliance-document.pdf",
+//         file_size: "1.2 MB",
+//         date: "Jan 12, 2022",
+//     },
+//     {
+//         id: 6,
+//         title: "Policy_Handbook_2025.pdf",
+//         file_size: "256 KB",
+//         date: "Jul 12, 2023",
+//     },
+//     {
+//         id: 7,
+//         title: "Health-compliance-document.pdf",
+//         file_size: "1.2 MB",
+//         date: "Jan 12, 2022",
+//     },
+//     {
+//         id: 8,
+//         title: "Policy_Handbook_2025.pdf",
+//         file_size: "256 KB",
+//         date: "Jul 12, 2023",
+//     },
+//     {
+//         id: 9,
+//         title: "Health-compliance-document.pdf",
+//         file_size: "1.2 MB",
+//         date: "Jan 12, 2022",
+//     },
+//     {
+//         id: 10,
+//         title: "Policy_Handbook_2025.pdf",
+//         file_size: "256 KB",
+//         date: "Jul 12, 2023",
+//     },
+//     {
+//         id: 11,
+//         title: "Health-compliance-document.pdf",
+//         file_size: "1.2 MB",
+//         date: "Jan 12, 2022",
+//     },
+//     {
+//         id: 12,
+//         title: "Policy_Handbook_2025.pdf",
+//         file_size: "256 KB",
+//         date: "Jul 12, 2023",
+//     },
+// ]

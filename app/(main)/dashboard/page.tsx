@@ -73,7 +73,7 @@ function page() {
     if (status === 'success' && data && file) {
       console.log("Response", data)
       setDocuments((prev: DocumentResponse[]) => [...prev, data as DocumentResponse]);
-      router.push(`/plate-editor/`);
+      router.push(`/documents/`);
     }
   }, [status, data, file])
 
