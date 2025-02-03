@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-react": "^9.4.0",
+    "@tanstack/react-query": "^5.65.1",
     "@types/mongoose": "^5.11.96",
     "@udecode/cn": "^42.0.0",
     "@udecode/plate": "^42.2.2",
@@ -18,7 +19,11 @@
     "@udecode/plate-docx": "^42.2.3",
     "@udecode/plate-heading": "^42.0.0",
     "@udecode/plate-juice": "^42.0.0",
+    "axios": "^1.7.9",
+    "ckeditor5": "^44.1.0",
+    "ckeditor5-premium-features": "^44.1.0",
     "firebase": "^11.1.0",
+    "jose": "^5.9.6",
     "mammoth": "^1.9.0",
     "mongoose": "^8.8.3",
     "next": "15.0.3",
@@ -30,13 +35,17 @@
     "slate-react": "^0.112.1"
   },
   "devDependencies": {
+    "@tanstack/react-query-devtools": "^5.65.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
+    "mini-css-extract-plugin": "^2.9.2",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1"
   }
 }

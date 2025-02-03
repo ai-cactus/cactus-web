@@ -6,17 +6,20 @@ import { Profile } from "./types";
 import { BASE_URL } from "./hooks";
 
 export const useAuthState = () => {
-  const [auth, setAuth] = useState<{user: User | null, profile: Profile | null}>({user: null, profile: null});
+  const [auth, setAuth] = useState<{
+    user: User | null;
+    profile: Profile | null;
+  }>({ user: null, profile: null });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(firebaseAuth, async (user) => {
       try {
         // @ts-ignore
-        console.log("User is loading", user, user.accessToken);
-        setAuth((prev) => ({...prev, user: user}));
+        // console.log("User is loading", user, user.accessToken);
+        setAuth((prev) => ({ ...prev, user: user }));
         setLoading(false);
-        const response = await fetch('http://localhost:3000/auth/profile', {
+        const response = await fetch("http://localhost:3000/auth/profile", {
           method: "PATCH",
           body: JSON.stringify({}),
           headers: {
@@ -24,10 +27,10 @@ export const useAuthState = () => {
             authorization: `Bearer ${user.accessToken}`,
           },
         });
-        console.log("User is loaded", user);
-        console.log("profile", response.clone());
-        const profile = await response.json() as Profile;
-        setAuth(prev => ({...prev, profile: profile}));
+        // console.log("User is loaded", user);
+        // console.log("profile", response.clone());
+        const profile = (await response.json()) as Profile;
+        setAuth((prev) => ({ ...prev, profile: profile }));
       } catch (error) {
         // handle error
         console.log("Error", error);
