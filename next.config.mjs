@@ -21,6 +21,7 @@ const nextConfig = {
     NEXT_PUBLIC_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL
   },
+  distDir: 'out'
   // webpack: (config, { isServer }) => {
   //   // Optimize CKEditor bundle
   //   config.module.rules.push({
