@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro');
+
 :root {
   /* --background: #ffffff;
   --foreground: #171717; */
@@ -22,4 +24,21 @@ body {
   /* color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif; */
+}
+
+.logo-text {
+  /* Cactus.ai */
+  height: 41px;
+
+  font-family: 'Neue Haas Grotesk Display Pro';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 34.3629px;
+  line-height: 41px;
+
+  color: #000000;
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 }

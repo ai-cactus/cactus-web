@@ -9,7 +9,8 @@ export default function Home() {
     <div className="relative bg-[#E7EBFD33] overflow-x-hidden">
       <header className="fixed z-40 top-0 left-0 right-0 bg-white/10 backdrop-blur">
         <div className="px-4 xl:px-8 py-5 lg:max-w-5xl mx-auto flex flex-row justify-between items-center">
-          <Image src="/Cactus.ai.png" alt="logo" className="w-36 h-auto" width={140} height={41} />
+          {/* <Image src="/Cactus.ai.png" alt="logo" className="w-36 h-auto" width={140} height={41} /> */}
+          <h3 className="logo-text">Theraptly</h3>
           <Suspense>
             <LandingHeaderNav />
           </Suspense>
