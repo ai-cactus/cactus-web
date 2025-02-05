@@ -13,7 +13,6 @@ import { useAnalyzeDocuments, useGetDocuments } from "@/services/user/queries";
 import Loader from "@/components/shared/loader";
 import EditorHeader from "@/components/documents/EditorHeader";
 import EditorSidebar from "@/components/documents/EditorSidebar";
-import Editor from "@/components/editor";
 
 export const runtime = "edge";
 
@@ -122,9 +121,9 @@ function Document() {
               <Loader />
             </div>
           )}
-          {conversionResult && (
+          {/* {conversionResult && (
             <Editor file={conversionResult} setLoading={setLoading} />
-          )}
+          )} */}
         </div>
       </div>
       <EditorSidebar
