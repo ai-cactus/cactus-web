@@ -8,9 +8,8 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Remove the standalone output since we're using Pages Functions
   images: {
-    unoptimized: true, // Required for Cloudflare Pages
+    unoptimized: true,
   },
   env: {
     NEXT_PUBLIC_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -21,7 +20,7 @@ const nextConfig = {
     NEXT_PUBLIC_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL
   },
-  distDir: 'out'
+  swcMinify: true,
   // webpack: (config, { isServer }) => {
   //   // Optimize CKEditor bundle
   //   config.module.rules.push({

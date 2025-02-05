@@ -752,7 +752,127 @@ how do I do a next build without caching?
 
 _**Assistant**_
 
+You can try building without cache using one of these commands:
 
+1. Using the `NEXT_SKIP_CACHE` environment variable:
+
+```bash
+NEXT_SKIP_CACHE=true npm run build
+```
+
+Or for Windows PowerShell:
+```bash
+$env:NEXT_SKIP_CACHE="true"; npm run build
+```
+
+2. Or by manually clearing the cache first:
+
+```bash
+# Remove Next.js cache
+rm -rf .next/cache
+# Then build
+npm run build
+```
+
+For Windows:
+```bash
+# Remove Next.js cache
+rd /s /q .next\cache
+# Then build
+npm run build
+```
+
+3. Or you can add it to your package.json as a new script:
+
+```json:package.json
+{
+  "scripts": {
+    // ... other scripts
+    "build:clean": "rm -rf .next/cache && next build",
+    "pages:build:clean": "rm -rf .next/cache && npx @cloudflare/next-on-pages"
+  }
+}
+```
+
+Then you can run:
+```bash
+npm run pages:build:clean
+```
+
+Try one of these approaches and see if it helps with the bundle size issue.
+
+---
+
+_**User**_
+
+found this issue while running the pages:build script to build my app in cloudflare: ▲  Error: The file "/opt/buildhome/repo/.next/routes-manifest.json" couldn't be found. This is often caused by a misconfiguration in your project.
+
+
+---
+
+_**Assistant**_
+
+
+
+This error typically occurs when the Next.js build hasn't been run before the Cloudflare Pages build. Let's modify your build process to ensure the Next.js build runs first:
+
+1. Update your `package.json` scripts:
+
+```json:package.json
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "pages:build": "next build && npx @cloudflare/next-on-pages",
+    "preview": "npm run pages:build && wrangler pages dev",
+    "deploy": "npm run pages:build && wrangler pages deploy"
+  }
+}
+```
+
+2. And let's update your `next.config.mjs` to ensure it's configured correctly for Cloudflare:
+
+```javascript:next.config.mjs
+import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
+import bundleAnalyzer from '@next/bundle-analyzer';
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    unoptimized: true,
+  },
+  env: {
+    NEXT_PUBLIC_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    NEXT_PUBLIC_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL
+  },
+  // Remove distDir configuration if it exists
+  swcMinify: true,
+};
+
+if (process.env.NODE_ENV === 'development') {
+  await setupDevPlatform();
+}
+
+export default withBundleAnalyzer(nextConfig);
+```
+
+The key changes are:
+1. Added `next build` before running `@cloudflare/next-on-pages`
+2. Removed any `distDir` or `output` configurations that might interfere with the build
+3. Added `swcMinify: true` for better optimization
+
+Try running the build again with these changes. The error should be resolved since we're ensuring the Next.js build runs first, which creates the required routes manifest file.
 
 ---
 
