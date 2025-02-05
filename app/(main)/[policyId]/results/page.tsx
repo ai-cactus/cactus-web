@@ -7,6 +7,9 @@ import { useFetch } from '@/lib/hooks';
 import { ErrorModal, LoadingCircleModal } from '@/components/modals';
 import Image from 'next/image';
 
+export const runtime = "experimental-edge";
+
+
 function page() {
   const { policyId } = useParams()
   const { data, error, go, status } = useFetch<ComplianceDocumentType>(`/documents/analysis/${policyId}`)
