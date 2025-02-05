@@ -521,6 +521,239 @@ _**Assistant**_
 
 
 
+To reduce the bundle size, we'll need to make several optimizations. Here's what we can do:
+
+1. First, update your `next.config.mjs` to enable webpack bundle analyzer so we can see what's taking up space:
+
+```javascript:next.config.mjs
+import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
+import { withAxiom } from 'next-axiom';
+import bundleAnalyzer from '@next/bundle-analyzer';
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    unoptimized: true,
+  },
+  env: {
+    NEXT_PUBLIC_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    NEXT_PUBLIC_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL
+  },
+  webpack: (config, { isServer }) => {
+    // Optimize CKEditor bundle
+    config.module.rules.push({
+      test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+      use: ['raw-loader'],
+    });
+
+    // Exclude large development-only packages from the server bundle
+    if (isServer) {
+      config.externals = [...(config.externals || []), {
+        'react-dom': 'react-dom',
+        '@tanstack/react-query-devtools': '@tanstack/react-query-devtools',
+      }];
+    }
+
+    return config;
+  },
+  // Add modularizeImports to reduce bundle size
+  modularizeImports: {
+    'react-icons': {
+      transform: 'react-icons/{{member}}',
+    },
+  },
+};
+
+if (process.env.NODE_ENV === 'development') {
+  await setupDevPlatform();
+}
+
+// Apply bundle analyzer wrapper
+export default withBundleAnalyzer(nextConfig);
+```
+
+2. Install the bundle analyzer:
+
+```bash
+npm install --save-dev @next/bundle-analyzer
+```
+
+3. Create a new script in your `package.json`:
+
+```json:package.json
+{
+  "scripts": {
+    // ... existing scripts ...
+    "analyze": "ANALYZE=true npm run build"
+  }
+}
+```
+
+4. Let's also optimize your CKEditor imports. Create a new file for CKEditor configuration:
+
+```typescript:lib/editor-config.ts
+// Import only the features you actually use
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import { essentials } from '@ckeditor/ckeditor5-essentials';
+// Add only the features you need
+
+export const editorConfig = {
+  plugins: [
+    essentials,
+    // Add only the plugins you actually use
+  ],
+  toolbar: {
+    items: [
+      // Add only the toolbar items you actually use
+    ]
+  }
+};
+```
+
+5. Update your imports in components to use dynamic imports where possible:
+
+```typescript:components/editor/index.tsx
+import dynamic from 'next/dynamic';
+
+// Dynamically import CKEditor
+const CKEditor = dynamic(
+  () => import('@ckeditor/ckeditor5-react').then((mod) => mod.CKEditor),
+  { ssr: false }
+);
+
+// Rest of your editor component...
+```
+
+6. For Firebase, make sure you're only importing what you need:
+
+```typescript:lib/firebase.ts
+import { initializeApp, getApps } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+// Only import the specific Firebase services you use
+
+const firebaseConfig = {
+  // your config
+};
+
+// Initialize Firebase only if it hasn't been initialized
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
+const auth = getAuth(app);
+
+export { app, auth };
+```
+
+7. Add a `.npmrc` file to enable selective installs:
+
+```text:.npmrc
+auto-install-peers=false
+strict-peer-dependencies=false
+```
+
+After making these changes:
+1. Run `npm run analyze` to see what's taking up space
+2. Remove any unused dependencies
+3. Try the build again with `npm run pages:build`
+
+If you're still having issues, we might need to:
+1. Split your app into smaller chunks
+2. Remove some features that are causing the bundle to be too large
+3. Consider using lighter alternatives for some of your dependencies
+
+Let me know if you still have issues after implementing these changes, and we can look at the bundle analyzer output to make more specific optimizations.
+
+---
+
+_**User**_
+
+cache/webpack/client-production/0.pack is 77.5 MiB in size
+12:22:07.424	how do we solve this? by deleting the cache after build?
+
+---
+
+_**Assistant**_
+
+The issue isn't with the cache itself - we need to further optimize the bundle size. Let's update the Next.js config to better handle code splitting and optimization:
+
+```javascript:next.config.mjs
+import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
+import bundleAnalyzer from '@next/bundle-analyzer';
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    unoptimized: true,
+  },
+  env: {
+    NEXT_PUBLIC_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    NEXT_PUBLIC_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL
+  },
+  output: 'export',
+  distDir: 'out',
+  webpack: (config, { isServer }) => {
+    // Exclude large development-only packages from the bundle
+    if (!isServer) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        '@tanstack/react-query-devtools': false,
+      };
+    }
+
+    // Optimize chunks
+    config.optimization = {
+      ...config.optimization,
+      splitChunks: {
+        chunks: 'all',
+        minSize: 20000,
+        maxSize: 24000000,
+        minChunks: 1,
+        maxAsyncRequests: 30,
+        maxInitialRequests: 30,
+        cacheGroups: {
+          default: false,
+          vendors: false,
+          framework: {
+            chunks: 'all',
+            name: 'framework',
+            test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]/,
+            priority: 40,
+            enforce: true,
+          },
+          lib: {
+            test(module) {
+              return module.size() > 160000 &&
+                /node_modules[/\\]/.test(module.identifier());
+            },
+
+---
+
+_**User**_
+
+how do I do a next build without caching?
+
+---
+
+_**Assistant**_
+
+
+
 ---
 
 

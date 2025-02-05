@@ -7,10 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "pages:build": "npx @cloudflare/next-on-pages",
+    "pages:build": "npx @cloudflare/next-on-pages && rm -rf ./out/cache",
     "preview": "npm run pages:build && wrangler pages dev",
-    "deploy": "npm run pages:build && wrangler pages deploy",
-    "analyze": "ANALYZE=true npm run build"
+    "deploy": "npm run pages:build && wrangler pages deploy"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^15.1.6",
