@@ -1,10 +1,11 @@
 name = "ai-cactus"
 compatibility_date = "2024-01-29"
 compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".next"
 
 [build]
 command = "npm run build"
-output_dir = "./out"
+output_dir = ".next"
 
 [build.environment]
 NODE_VERSION = "20.11.1"
@@ -13,4 +14,4 @@ NODE_VERSION = "20.11.1"
 vars = { ENVIRONMENT = "production" }
 
 [site]
-bucket = "./out" 
+bucket = ".next" 
