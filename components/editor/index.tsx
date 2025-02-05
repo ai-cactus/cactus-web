@@ -478,7 +478,7 @@ export default function Editor({ file, setLoading }: IProps) {
         },
       },
     };
-  }, [isLayoutReady]);
+  }, [isLayoutReady, file]);
 
   // useEffect(() => {
   //   if (editorConfig) {

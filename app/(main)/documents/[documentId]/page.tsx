@@ -18,12 +18,13 @@ import { UploadedDocumentContext } from "@/lib/context";
 import { BiInfoCircle } from "react-icons/bi";
 import { DocumentResponse } from "@/lib/types";
 import { useFetch } from "@/lib/hooks";
-import Editor from "@/components/Editor";
+// import Editor from "@/components/Editor";
 import { useAnalyzeDocuments, useGetDocuments } from "@/services/user/queries";
 import Loader from "@/components/shared/loader";
 import EditorHeader from "@/components/documents/EditorHeader";
 import { useRouter } from "next/navigation";
 import EditorSidebar from "@/components/documents/EditorSidebar";
+import Editor from "@/components/editor";
 
 function Document() {
   const { documents } = useContext(UploadedDocumentContext);

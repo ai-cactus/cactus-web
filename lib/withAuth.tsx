@@ -19,7 +19,7 @@ const withAuth = <P extends object>(WrappedComponent: ComponentType<P>): React.F
       if (!loading && !auth.user) {
         router.push('/login');
       }
-    }, [loading, auth.user]);
+    }, [loading, auth.user, router]);
 
     if (loading) return <LoadingModal />;
     return auth.user ? <WrappedComponent {...props} /> : null;
