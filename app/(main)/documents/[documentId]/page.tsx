@@ -2,27 +2,16 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import mammoth from "mammoth";
-import { useParams, useSearchParams } from "next/navigation";
-import { SignJWT, jwtVerify } from "jose";
+import { useParams } from "next/navigation";
+import { SignJWT } from "jose";
 import axios from "axios";
 
-import { usePlateEditor } from "@udecode/plate/react";
-import {
-  BoldPlugin,
-  ItalicPlugin,
-  UnderlinePlugin,
-} from "@udecode/plate-basic-marks/react";
-import { DocxPlugin } from "@udecode/plate-docx";
-import { JuicePlugin } from "@udecode/plate-juice";
 import { UploadedDocumentContext } from "@/lib/context";
-import { BiInfoCircle } from "react-icons/bi";
 import { DocumentResponse } from "@/lib/types";
-import { useFetch } from "@/lib/hooks";
 // import Editor from "@/components/Editor";
 import { useAnalyzeDocuments, useGetDocuments } from "@/services/user/queries";
 import Loader from "@/components/shared/loader";
 import EditorHeader from "@/components/documents/EditorHeader";
-import { useRouter } from "next/navigation";
 import EditorSidebar from "@/components/documents/EditorSidebar";
 import Editor from "@/components/editor";
 

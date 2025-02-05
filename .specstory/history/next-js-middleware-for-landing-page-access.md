@@ -506,6 +506,23 @@ Also, make sure that in the Cloudflare Pages dashboard, under the "Build & Deplo
 
 ---
 
+_**User**_
+
+build works well but we have this error: 
+✘ [ERROR] Error: Pages only supports files up to 25 MiB in size
+11:41:53.381	
+11:41:53.381	  cache/webpack/server-production/0.pack is 57.9 MiB in size
+
+how do we reduce the bundle size?
+
+---
+
+_**Assistant**_
+
+
+
+---
+
 
 
 ---

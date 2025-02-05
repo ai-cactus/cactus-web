@@ -9,19 +9,14 @@
     "lint": "next lint",
     "pages:build": "npx @cloudflare/next-on-pages",
     "preview": "npm run pages:build && wrangler pages dev",
-    "deploy": "npm run pages:build && wrangler pages deploy"
+    "deploy": "npm run pages:build && wrangler pages deploy",
+    "analyze": "ANALYZE=true npm run build"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-react": "^9.4.0",
+    "@next/bundle-analyzer": "^15.1.6",
     "@tanstack/react-query": "^5.65.1",
     "@types/mongoose": "^5.11.96",
-    "@udecode/cn": "^42.0.0",
-    "@udecode/plate": "^42.2.2",
-    "@udecode/plate-basic-marks": "^42.0.0",
-    "@udecode/plate-block-quote": "^42.0.0",
-    "@udecode/plate-docx": "^42.2.3",
-    "@udecode/plate-heading": "^42.0.0",
-    "@udecode/plate-juice": "^42.0.0",
     "axios": "^1.7.9",
     "ckeditor5": "^44.1.0",
     "ckeditor5-premium-features": "^44.1.0",
