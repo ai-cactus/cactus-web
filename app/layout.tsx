@@ -28,6 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-[1440px] m-auto`}
+        suppressHydrationWarning={true} 
       >
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
