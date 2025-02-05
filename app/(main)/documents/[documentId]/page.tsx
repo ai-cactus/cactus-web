@@ -26,7 +26,7 @@ import { useRouter } from "next/navigation";
 import EditorSidebar from "@/components/documents/EditorSidebar";
 import Editor from "@/components/editor";
 
-export const runtime = "experimental-edge";
+export const runtime = "edge";
 
 function Document() {
   const { documents } = useContext(UploadedDocumentContext);

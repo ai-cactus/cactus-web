@@ -7,7 +7,7 @@ import { useFetch } from '@/lib/hooks';
 import { ErrorModal, LoadingCircleModal } from '@/components/modals';
 import Image from 'next/image';
 
-export const runtime = "experimental-edge";
+export const runtime = "edge";
 
 
 function page() {
