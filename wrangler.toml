@@ -1,4 +1,16 @@
 name = "ai-cactus"
 compatibility_date = "2024-01-29"
 compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = ".vercel/output/static" 
+
+[build]
+command = "npm run build"
+output_dir = "./out"
+
+[build.environment]
+NODE_VERSION = "20.11.1"
+
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+[site]
+bucket = "./out" 

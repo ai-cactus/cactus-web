@@ -315,7 +315,194 @@ What do we do about it?
 
 _**Assistant**_
 
+We need to update the Node.js version to meet Next.js requirements. Let's make two changes:
 
+1. First, let's add an `.nvmrc` file to specify the Node.js version:
+
+```text:.nvmrc
+20.11.1
+```
+
+2. Then, let's update the Node version in your package.json by adding an engines field:
+
+```json:package.json
+{
+  // ... existing code ...
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  // ... rest of your package.json
+}
+```
+
+For Cloudflare Pages deployment, you'll need to:
+
+1. Go to your project settings in Cloudflare Pages dashboard
+2. Find "Environment Variables"
+3. Add/Update the `NODE_VERSION` variable to:
+```
+NODE_VERSION: 20.11.1
+```
+
+After making these changes:
+1. Commit and push your changes
+2. Run `npm install` locally with the new Node version
+3. Try deploying again with `npm run deploy`
+
+If you're developing locally, you should also update your Node.js version to 20.x. If you're using nvm, you can run:
+```bash
+nvm install 20
+nvm use 20
+```
+
+This should resolve the Node.js version compatibility error during deployment.
+
+---
+
+_**User**_
+
+Getting this error while running in cloudflare: FirebaseError: Firebase: Error (auth/invalid-api-key).
+
+Looks like the pages build is not getting my environment variables. There is this warning above too: Build environment variables: (none found)
+
+
+---
+
+_**Assistant**_
+
+
+
+We need to properly set up environment variables for Cloudflare Pages. There are two places where we need to add them:
+
+1. First, let's make sure your local `.env` file has all the required Firebase variables:
+
+```text:.env.example
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+```
+
+2. Then, you need to add these environment variables to Cloudflare Pages:
+
+1. Go to your Cloudflare Pages dashboard
+2. Select your project
+3. Go to Settings > Environment variables
+4. Add each of the environment variables from your `.env` file
+5. Make sure to add them to both "Production" and "Preview" environments
+6. For variables that need to be available on the client-side (like Firebase config), make sure they start with `NEXT_PUBLIC_`
+
+Here's how to add them via Wrangler CLI if you prefer:
+
+```bash
+# For production
+wrangler pages deployment env set NEXT_PUBLIC_FIREBASE_API_KEY "your_api_key"
+wrangler pages deployment env set NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN "your_auth_domain"
+wrangler pages deployment env set NEXT_PUBLIC_FIREBASE_PROJECT_ID "your_project_id"
+wrangler pages deployment env set NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET "your_storage_bucket"
+wrangler pages deployment env set NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID "your_messaging_sender_id"
+wrangler pages deployment env set NEXT_PUBLIC_FIREBASE_APP_ID "your_app_id"
+
+# For preview environments
+wrangler pages project env set NEXT_PUBLIC_FIREBASE_API_KEY "your_api_key"
+# ... repeat for other variables
+```
+
+Also, let's update the `.gitignore` to make sure we don't accidentally commit the example file:
+
+```text:.gitignore
+# ... existing entries ...
+
+# env files
+.env
+.env.*
+!.env.example
+```
+
+After adding these environment variables:
+1. Go back to Cloudflare Pages dashboard
+2. Trigger a new deployment (you can do this by clicking "Retry deployment" on your last failed build)
+
+This should resolve the Firebase API key error as the environment variables will now be available during build time and runtime.
+
+---
+
+_**User**_
+
+I added the env vars to the cloudflare dashboard but I am still getting the issue. Is there something wrong with my wrangler file? This is in the logs: 
+Found wrangler.toml file. Reading build configuration...
+11:15:43.302	pages_build_output_dir: .vercel/output/static
+11:15:43.302	Build environment variables: (none found)
+
+---
+
+_**Assistant**_
+
+
+
+Yes, we need to modify the `wrangler.toml` file to properly handle environment variables. Let's update it:
+
+```toml:wrangler.toml
+name = "ai-cactus"
+compatibility_date = "2024-01-29"
+compatibility_flags = ["nodejs_compat"]
+
+[build]
+command = "npm run build"
+output_dir = ".vercel/output/static"
+
+[build.environment]
+NODE_VERSION = "20.11.1"
+
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+[site]
+bucket = ".vercel/output/static"
+```
+
+Also, let's make sure your Next.js config is properly set up to handle environment variables. Create or update your `next.config.mjs`:
+
+```javascript:next.config.mjs
+import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    unoptimized: true,
+  },
+  env: {
+    NEXT_PUBLIC_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    NEXT_PUBLIC_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  }
+};
+
+if (process.env.NODE_ENV === 'development') {
+  await setupDevPlatform();
+}
+
+export default nextConfig;
+```
+
+Additionally, let's verify that your Firebase initialization is properly handling the environment variables. Could you show me your `lib/firebase.ts` file? We might need to add some error handling there to make sure it fails gracefully if environment variables are missing.
+
+After making these changes:
+1. Commit and push your changes
+2. Go to Cloudflare Pages dashboard
+3. Go to Settings > Environment variables
+4. Verify all your environment variables are there and properly set
+5. Trigger a new deployment
+
+Also, make sure that in the Cloudflare Pages dashboard, under the "Build & Deploy" settings:
+1. The build command is set to: `npm run pages:build`
+2. The build output directory is set to: `.vercel/output/static`
+3. The environment variables are set for both "Production" and "Preview" environments
 
 ---
 
