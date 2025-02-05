@@ -21,29 +21,29 @@ const nextConfig = {
     NEXT_PUBLIC_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL
   },
-  webpack: (config, { isServer }) => {
-    // Optimize CKEditor bundle
-    config.module.rules.push({
-      test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
-      use: ['raw-loader'],
-    });
+  // webpack: (config, { isServer }) => {
+  //   // Optimize CKEditor bundle
+  //   config.module.rules.push({
+  //     test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+  //     use: ['raw-loader'],
+  //   });
 
-    // Exclude large development-only packages from the server bundle
-    if (isServer) {
-      config.externals = [...(config.externals || []), {
-        'react-dom': 'react-dom',
-        '@tanstack/react-query-devtools': '@tanstack/react-query-devtools',
-      }];
-    }
+  //   // Exclude large development-only packages from the server bundle
+  //   if (isServer) {
+  //     config.externals = [...(config.externals || []), {
+  //       'react-dom': 'react-dom',
+  //       '@tanstack/react-query-devtools': '@tanstack/react-query-devtools',
+  //     }];
+  //   }
 
-    return config;
-  },
-  // Add modularizeImports to reduce bundle size
-  modularizeImports: {
-    'react-icons': {
-      transform: 'react-icons/{{member}}',
-    },
-  },
+  //   return config;
+  // },
+  // // Add modularizeImports to reduce bundle size
+  // modularizeImports: {
+  //   'react-icons': {
+  //     transform: 'react-icons/{{member}}',
+  //   },
+  // },
 };
 
 if (process.env.NODE_ENV === 'development') {
