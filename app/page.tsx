@@ -94,7 +94,7 @@ export default function Home() {
       </section>
       <footer className="bg-white">
         <div className="px-4 xl:px-8 py-5 lg:max-w-5xl mx-auto flex flex-col md:flex-row justify-between md:items-center">
-          <Image src="/Cactus.ai.png" alt="logo" className="w-36 h-auto" width={140} height={41} />
+          <h3 className="logo-text">Theraptly</h3>
           <nav className="my-8 md:my-0">
             <ul className="flex flex-col md:flex-row md:space-x-2">
               <li>

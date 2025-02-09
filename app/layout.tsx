@@ -15,8 +15,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Cactus AI",
-  description: "Cactus AI is a platform for AI compliance analysis",
+  title: "Theraptly",
+  description: "Theraptly is a platform for AI compliance analysis",
 };
 
 export default function RootLayout({

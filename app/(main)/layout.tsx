@@ -22,7 +22,7 @@ function layout({
           <header className="bg-white h-16 flex items-center justify-center">
             <Image
               src={"/Logo-Light.png"}
-              alt="cactus ai"
+              alt="Theraptly"
               width={210}
               height={60}
               className="inline-block h-12 object-contain"

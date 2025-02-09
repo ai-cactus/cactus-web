@@ -49,7 +49,7 @@ function page() {
 
     return (
         <div className='flex flex-col justify-center min-h-screen px-10 py-16'>
-            <Image src={'/Logo-Light.png'} alt='cactus ai' width={210} height={60} className='inline-block mx-auto' />
+            <Image src={'/Logo-Light.png'} alt='Theraptly' width={210} height={60} className='inline-block mx-auto' />
             <h2 className="pt-6 pb-2 text-[#111111] text-2xl font-bold text-center">Create a new account</h2>
             <p className="text-[#4b4b4b] text-base font-normal text-center">Enter your personal data to create your account.</p>
             <form onSubmit={handleSignup} className='mt-6 max-w-96 w-full mx-auto flex flex-col gap-6'>
