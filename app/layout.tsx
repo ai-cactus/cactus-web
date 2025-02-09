@@ -1,7 +1,19 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Inter, DM_Sans } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,10 +37,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${dmSans.variable}`}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-[1440px] m-auto`}
-        suppressHydrationWarning={true} 
+        suppressHydrationWarning={true}
       >
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>

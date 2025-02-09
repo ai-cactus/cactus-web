@@ -8,6 +8,10 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        inter: ["var(--font-inter)"],
+        sans: ["var(--font-sans)"],
+      },
       colors: {
         primary: "#3E6FF7",
         "primary-20": "#4758E0",

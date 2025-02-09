@@ -1,6 +1,8 @@
 "use client";
 
+import Assets from "@/lib/assets";
 import { useAuthState } from "@/lib/authState";
+import { AppRoutes } from "@/utils/routes";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -66,7 +68,7 @@ export function LandingHeaderNav() {
           </li>
           <li>
             <Link
-              href="#request-a-demo"
+              href={AppRoutes.auth.signup.path}
               className="font-medium px-8 py-3 rounded-full bg-black text-white md:ml-8 inline-block w-full md:w-fit"
             >
               Get Started
@@ -154,49 +156,50 @@ export function LandingFooterNav() {
 
 export function MainNav() {
   const { auth } = useAuthState();
-  // console.log(auth.profile)
   return (
-    <nav className="sticky z-30 h-16 top-0 flex flex-row items-center gap-10 px-10 bg-white border-b border-b-[#1C1C1C1A]">
-      <form
-        action=""
-        className="flex-1 flex flex-row bg-[#F2F5F8] rounded-lg h-10 gap-4 px-5"
-      >
-        <button type="submit">
-          <Image
-            src={"/search_ic.svg"}
-            alt="search icon"
-            width={24}
-            height={24}
+    <nav className="py-5 flex flex-row items-center  gap-[3rem] font-inter px-10 bg-white border-b border-b-[#1C1C1C1A]">
+      <form action="" className="flex-1 mx-[2rem]">
+        <div className="flex-1 flex flex-row bg-[#f9fafb] rounded-lg h-14 gap-4 px-5">
+          <button type="submit">
+            <Image
+              src={Assets.Search}
+              alt="search icon"
+              width={24}
+              height={24}
+            />
+          </button>
+          <input
+            required
+            type="text"
+            name=""
+            id=""
+            placeholder="Seach or type a command"
+            className="w-full bg-transparent outline-none text-[#000000] text-opacity-70"
           />
-        </button>
-        <input
-          required
-          type="text"
-          name=""
-          id=""
-          placeholder="Seach or type a command"
-          className="w-full bg-transparent outline-none"
-        />
+        </div>
       </form>
-      <Link href={"/notifications"} className="bg-[#F2F5F8] p-2 rounded-lg">
-        <Image
-          src={"/notification_ic.svg"}
-          alt="search icon"
-          width={24}
-          height={24}
-        />
-      </Link>
-      <div className="flex flex-row items-center gap-2">
-        <Image
-          src={"/avatar.png"}
-          alt="search icon"
-          width={48}
-          height={48}
-          className="rounded-full w-11 h-11"
-        />
-        <div className="max-w-32">
-          <h3 className="text-xs uppercase">{auth.profile?.practice}</h3>
-          <h2 className="text-sm font-semibold">{auth.user?.displayName}</h2>
+      <div className="flex-1 flex items-center gap-5">
+        <div className="bg-white shadow-[0_4px_6px_0_rgba(0,0,0,0.02)] p-2 flex rounded-full">
+          <Link href={AppRoutes.main.notifications.path}>
+            <Image src={Assets.Bell} alt="search icon" width={16} height={16} />
+          </Link>
+        </div>
+        <div className="flex flex-row items-center gap-2">
+          <Image
+            src={"/avatar.png"}
+            alt="search icon"
+            width={48}
+            height={48}
+            className="rounded-full w-12 h-12"
+          />
+          <div className="max-w-32">
+            <h2 className="text-sm text-[#292d32]  font-semibold">
+              {auth.user?.displayName}
+            </h2>
+            <h3 className="text-[10px] text-[rgba(41,45,50,0.44)] font-sm ">
+              {auth.profile?.practice}
+            </h3>
+          </div>
         </div>
       </div>
     </nav>

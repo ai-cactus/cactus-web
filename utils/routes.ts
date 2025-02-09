@@ -30,6 +30,14 @@ export const AppRoutes = {
       name: "documents",
       path: "/documents",
     },
+    history: {
+      name: "history",
+      path: "/history",
+    },
+    notifications: {
+      name: "notifications",
+      path: "/notifications",
+    },
     document: {
       name: "document",
       path: (id: string) => `/documents/${id}`,
