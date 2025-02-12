@@ -1,6 +1,7 @@
 "use client";
 
 import { signInWithGoogle } from "@/lib/auth";
+import { cn } from "@/utils/utils";
 import Image from "next/image";
 import Link, { LinkProps } from "next/link";
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
@@ -20,7 +21,9 @@ export function FilledButton(
   return (
     <button
       {...props}
-      className={`bg-[#4758e0] disabled:bg-gray-400 text-white font-semibold py-3 px-5 rounded-lg ${props.className}`}
+      className={cn(
+        `bg-[#4758e0] disabled:bg-gray-400 text-white font-semibold py-3 px-5 rounded-lg ${props.className}`
+      )}
     >
       {props.children}
     </button>

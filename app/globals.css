@@ -1,8 +1,9 @@
+@import url("https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro");
+@import url("https://fonts.cdnfonts.com/css/helvetica-neue-55");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro');
 
 :root {
   /* --background: #ffffff;
@@ -30,7 +31,7 @@ body {
   /* Cactus.ai */
   height: 41px;
 
-  font-family: 'Neue Haas Grotesk Display Pro';
+  font-family: "Neue Haas Grotesk Display Pro";
   font-style: normal;
   font-weight: 600;
   font-size: 34.3629px;
@@ -41,4 +42,8 @@ body {
   flex: none;
   order: 0;
   flex-grow: 0;
+}
+
+.custom-shadow {
+  box-shadow: 0px 144px 144px 0px rgba(3, 0, 41, 0.12);
 }

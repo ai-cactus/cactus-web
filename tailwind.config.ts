@@ -11,6 +11,9 @@ export default {
       fontFamily: {
         inter: ["var(--font-inter)"],
         sans: ["var(--font-sans)"],
+        manrope: ["var(--font-manrope)"],
+        neue: ["Neue Haas Grotesk Display Pro"],
+        helvetica: ["Helvetica Neue"],
       },
       colors: {
         primary: "#3E6FF7",

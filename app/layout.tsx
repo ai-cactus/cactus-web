@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Inter, DM_Sans } from "next/font/google";
+import { Inter, DM_Sans, Manrope } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
@@ -13,6 +13,11 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
+});
+const manrope = Manrope({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-manrope",
 });
 
 const geistSans = localFont({
@@ -37,7 +42,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${dmSans.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${dmSans.variable} ${manrope.variable}`}
+    >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-[1440px] m-auto`}
         suppressHydrationWarning={true}

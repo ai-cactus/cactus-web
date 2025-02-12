@@ -3,6 +3,7 @@
 import Assets from "@/lib/assets";
 import { useAuthState } from "@/lib/authState";
 import { AppRoutes } from "@/utils/routes";
+import { landingHeaderNav } from "@/utils/static";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -40,36 +41,25 @@ export function LandingHeaderNav() {
         </div>
         <ul
           role="menuitem"
-          className="flex flex-col md:flex-row md:space-x-2 space-y-4 md:space-y-0 p-8 md:p-0"
+          className="flex flex-col md:flex-row md:gap-[2.125rem] space-y-4 md:space-y-0 p-8 md:p-0"
         >
-          <li>
-            <Link
-              href="#"
-              className="font-medium px-5 py-3 rounded-full inline-block w-full md:w-fit border border-black"
-            >
-              Product
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="#"
-              className="font-medium px-5 py-3 rounded-full inline-block w-full md:w-fit border border-black"
-            >
-              Features
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="#"
-              className="font-medium px-5 py-3 rounded-full inline-block w-full md:w-fit border border-black"
-            >
-              Testimonials
-            </Link>
-          </li>
+          <div className="flex items-center gap-16 px-[2rem]">
+            {landingHeaderNav.map((item, i) => (
+              <li key={i}>
+                <Link
+                  href={item.href}
+                  className="font-medium text-[1rem] font-neue"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </div>
+
           <li>
             <Link
               href={AppRoutes.auth.signup.path}
-              className="font-medium px-8 py-3 rounded-full bg-black text-white md:ml-8 inline-block w-full md:w-fit"
+              className="px-8 py-3 rounded-full bg-black text-white text-[1rem] font-semibold w-full h-[2.75rem] md:w-fit"
             >
               Get Started
             </Link>

@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import keys from "./keys";
 import api from "../api";
-import { DocumentResponse } from "@/lib/types";
+import { DocumentResponse, SingleDocument } from "@/lib/types";
 import { AnalyzeDocumentPayload } from "./types";
 
 const BASE_URL = "/documents";
@@ -13,6 +13,21 @@ export const useGetDocuments = () => {
   });
   return {
     data: data as unknown as DocumentResponse[],
+    isLoading,
+    isPending,
+    error,
+  };
+};
+export const useGetDocumentById = (id?: string) => {
+  const hash = [keys.read, id];
+  const { data, isLoading, isPending, error } = useQuery({
+    queryKey: hash,
+    queryFn: async () =>
+      await api.get({ url: `${BASE_URL}/${id}`, auth: true }),
+    enabled: !!id,
+  });
+  return {
+    data: data as unknown as SingleDocument,
     isLoading,
     isPending,
     error,

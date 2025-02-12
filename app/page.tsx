@@ -1,5 +1,7 @@
 import { RequestADemoForm } from "@/components/forms";
 import { LandingHeaderNav } from "@/components/main/navs";
+import Assets from "@/lib/assets";
+import WebsiteAssets from "@/lib/assets/website-assets";
 import { AppRoutes } from "@/utils/routes";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,9 +11,15 @@ export default function Home() {
   return (
     <div className="relative bg-[#E7EBFD33] overflow-x-hidden">
       <header className="fixed z-40 top-0 left-0 right-0 bg-white/10 backdrop-blur">
-        <div className="px-4 xl:px-8 py-5 lg:max-w-5xl mx-auto flex flex-row justify-between items-center">
+        <div className="mx-4  py-5 lg:max-w-[75rem] lg:mx-10 xl:mx-auto flex flex-row justify-between items-center">
           {/* <Image src="/Cactus.ai.png" alt="logo" className="w-36 h-auto" width={140} height={41} /> */}
-          <h3 className="logo-text">Theraptly</h3>
+          <div>
+            <Image
+              src={WebsiteAssets.LogoLight}
+              alt="Website Logo"
+              className="w-[12.25rem] h-[4.2rem]"
+            />
+          </div>
           <Suspense>
             <LandingHeaderNav />
           </Suspense>
@@ -19,29 +27,30 @@ export default function Home() {
       </header>
       <section
         id="intro"
-        className="relative bg-white bg-[url(/background-1.png)] bg-no-repeat bg-cover"
+        className="relative bg-white bg-[url(/background-1.png)] bg-no-repeat bg-cover  md:bg-left-top"
       >
-        <div className="flex flex-col pt-32 pb-32 px-4 xl:px-8 lg:max-w-5xl mx-auto my-auto text-white">
-          <h1 className="text-center sm:text-left text-4xl lg:text-6xl sm:max-w-md lg:max-w-lg font-bold">
+        <div className="flex flex-col pt-[13.25rem] md:pt-[16.3rem] pb-[10rem] md:pb-[14.1rem] mx-8  lg:max-w-[75rem] lg:mx-10 xl:mx-auto my-auto text-white">
+          <h1 className="text-left text-[2.6875rem] lg:text-[5.625rem] leading-[3.125rem] lg:leading-[5.625rem] sm:max-w-md lg:max-w-[45rem] lg:tracking-tighter font-sans font-bold">
             Compliance work in seconds, not weeks
           </h1>
-          <p className="text-center sm:text-left text-base sm:max-w-lg md:max-w-md lg:max-w-lg mt-5 mb-10">
+          <p className="text-left text-sm leading-[1.5625rem] md:leading-normal md:text-[1.375rem] font-medium font-manrope sm:max-w-lg md:max-w-md lg:max-w-[45rem] mt-5 mb-10">
             We use AI to help healthcare providers navigate the difficult
             terrain of compliance by identifying gaps, suggesting improvements,
             and helping prepare for audits.
           </p>
           <Link
             href={AppRoutes.auth.signup.path}
-            className="font-medium px-10 py-3 rounded-xl bg-black inline-block w-fit mx-auto sm:mx-0"
+            className="font-medium px-10  rounded-xl bg-black  w-[11.31rem] h-[3.19rem] flex items-center justify-center  md:mx-auto sm:mx-0"
           >
             Get Started
           </Link>
         </div>
-        <div className="absolute hidden md:block md:top-[calc(50%-250px)] lg:top-[calc(50%-325px)] md:-right-24 lg:-right-36 z-20">
+        <div className="absolute hidden md:block md:top-[calc(50%-250px)] lg:top-[100px] md:-right-24 lg:-right-10 z-20">
+          {/* <div className="absolute hidden md:block md:top-[calc(50%-250px)] lg:top-[calc(50%-525px)] md:-right-24 lg:-right-9 z-20"> */}
           <Image
-            src="/chips.png"
+            src={WebsiteAssets.Chips}
             alt="spinning animation"
-            className="md:h[500px] lg:h-[650px] md:w-[500px] lg:w-[650px] object-contain"
+            className="md:h[500px] lg:h-[930px] md:w-[500px] lg:w-[930px] object-contain"
             width={650}
             height={650}
           />
@@ -49,22 +58,22 @@ export default function Home() {
       </section>
       <section
         id="benefits"
-        className="border border-white bg-[#E9EDFD] bg-[url(/looper.png),linear-gradient(180deg,white,transparent)] bg-no-repeat bg-right-top bg-[220px_220px,100%_100%] z-10 relative p-4 md:p-16 md:pb-20 pt-10 lg:max-w-5xl mx-4 lg:mx-auto -mt-24 rounded-2xl shadow-md"
+        className="border border-white bg-[#E9EDFD] bg-[url(/looper.png),linear-gradient(180deg,white,transparent)] bg-no-repeat bg-right-top bg-[400px_400px,100%_100%] z-10 relative p-4 md:p-16 md:pb-[calc(4.7rem+2.735rem)] pt-10 pb-10 lg:max-w-[calc(75rem+80px)] mx-0 lg:mx-auto -mt-24 rounded-[30px] custom-shadow"
       >
         <h3 className="w-fit mx-auto border text-gray-600 border-gray-400 rounded-lg px-4 py-1">
           Benefits
         </h3>
-        <h2 className="text-3xl md:text-4xl font-medium text-center mt-10 mb-5">
+        <h2 className="text-[2rem] lg:text-[2.875rem] leading-[2.375rem] lg:leading-[3.375rem] font-medium tracking-tighter font-inter text-center mt-10 mb-5">
           Automate your compliance work, saving you hours and money with our{" "}
           <span className="whitespace-nowrap">AI-driven</span> platform
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-6 max-w-[22rem] mx-auto lg:max-w-full">
           <BenefitCard
             img="/icon-1.svg"
             title="Automated Gap Analysis"
             descr="Instantly identify discrepancies between your policies and state health regulations."
           />
-          <div className="md:mt-10">
+          <div className="relative lg:top-[2.735rem]">
             <BenefitCard
               img="/icon-2.svg"
               title="Actionable Insights"
@@ -78,29 +87,29 @@ export default function Home() {
           />
         </div>
       </section>
-      <section id="capabilities" className="py-20">
-        <h3 className="w-fit mx-auto border text-gray-600 border-gray-400 rounded-lg px-4 py-1">
+      <section id="capabilities" className="pt-[6.125rem] pb-20">
+        <h3 className="w-fit mx-auto border text-gray-600 font-medium font-manrope text-sm border-gray-400 rounded-lg px-4 py-2">
           Pain Points Solved for You
         </h3>
-        <h2 className="text-3xl md:text-4xl font-medium text-center mt-10 mb-5">
+        <h2 className="text-[2rem] lg:text-[2.875rem] font-semibold text-center mt-10 mb-5 lg:mb-10 px-4 xl:px-0 leading-[2.375rem] lg:leading-[3rem]">
           We Make Your Complex Compliance Issues Easy
         </h2>
-        <section className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 px-4 xl:px-8 lg:max-w-5xl mx-auto">
-          <div className="border-b md:border-r border-gray-300 p-10">
+        <section className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 px-4 xl:px-0 lg:max-w-[72.25rem] mx-4 lg:mx-10 xl:mx-auto">
+          <div className="border-b-[0.5px] md:border-r-[0.5px] border-[#CFCFCF] md:border-[black] p-10">
             <CompliancePointCard
               img="/analysis.svg"
               title="Complex Regulatory Landscape"
               descr="Navigating ever-changing regulations can be overwhelming. Our AI keeps you updated and compliant."
             />
           </div>
-          <div className="border-b border-gray-300 p-10">
+          <div className="border-b-[0.5px] border-[#CFCFCF] md:border-[black] p-10">
             <CompliancePointCard
               img="/analysis.svg"
               title="Time-Consuming Audits"
               descr="We streamline the audit process, providing all required documentation with minimal effort."
             />
           </div>
-          <div className="border-b md:border-b-0 md:border-r border-gray-300 p-10">
+          <div className="border-b-[0.5px] md:border-b-0 md:border-r-[0.5px] border-[#CFCFCF] md:border-[black] p-10">
             <CompliancePointCard
               img="/analysis.svg"
               title="Manual Policy Updates"
@@ -118,99 +127,59 @@ export default function Home() {
       </section>
       <section
         id="request-a-demo"
-        className="bg-[#657FEF] bg-[url(/star.svg)] bg-no-repeat bg-right-bottom text-white"
+        className="bg-[#657FEF] text-white max-w-[74.375rem] mx-auto rounded-t-[30px] rounded-b-[0px] lg:rounded-b-[30px] bg-gradient-to-b from-[#657FEF] to-[#5744EB]"
       >
-        <div className="px-4 xl:px-8 py-20 lg:max-w-5xl mx-auto">
-          <h3 className="w-fit mx-auto border border-[#EBEBEB80] rounded-lg px-4 py-1">
-            Request a Demo
-          </h3>
+        <div className="px-4 xl:px-8 py-4 md:py-[4.3125rem] lg:max-w-5xl mx-auto">
           <Suspense>
             <RequestADemoForm />
           </Suspense>
         </div>
+        <footer className=" mt-3 md:mt-16 border-t border-[#D4D4D4] mx-6 block lg:hidden">
+          <div className="px-4  py-5  mx-auto flex flex-col gap-3 justify-between items-start">
+            <Image
+              src={WebsiteAssets.LogoLight}
+              alt="logo"
+              className="w-[7.125rem] h-auto"
+              width={129}
+              height={40}
+            />
+            <p className="text-base font-manrope">
+              © 2024 Cactus AI • All right reserved
+            </p>
+            <nav>
+              <ul className="flex flex-row gap-4">
+                <li className="font-manrope text-baese underline">
+                  <Link href="">Terms of Service</Link>
+                </li>
+
+                <li className="font-manrope text-baese underline">
+                  <Link href="">Privacy Policy</Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </footer>
       </section>
-      <footer className="bg-white">
-        <div className="px-4 xl:px-8 py-5 lg:max-w-5xl mx-auto flex flex-col md:flex-row justify-between md:items-center">
+      <footer className=" mt-16 border-t border-[#D4D4D4] mx-11 hidden lg:block">
+        <div className="px-4 xl:px-8 py-5 lg:max-w-[72.125rem] mx-auto flex flex-col lg:flex-row gap-3 lg:gap-0 justify-between md:items-center">
           <Image
-            src="/Cactus.ai.png"
+            src={Assets.Logo}
             alt="logo"
-            className="w-36 h-auto"
-            width={140}
-            height={41}
+            className="w-[11.75rem] h-auto"
+            width={188}
+            height={63}
           />
-          <nav className="my-8 md:my-0">
-            <ul className="flex flex-col md:flex-row md:space-x-2">
-              <li>
-                <Link
-                  href="#"
-                  className="font-medium px-5 py-3 rounded-full inline-block"
-                >
-                  Product
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="font-medium px-5 py-3 rounded-full inline-block"
-                >
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="font-medium px-5 py-3 rounded-full inline-block"
-                >
-                  Testimonials
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          <p className="text-base font-manrope">
+            © 2024 Cactus AI • All right reserved
+          </p>
           <nav>
             <ul className="flex flex-row gap-4">
-              <li>
-                <Link href="">
-                  <Image
-                    src="/Facebook.svg"
-                    alt="Facebook-icon"
-                    className="w-8 h-8"
-                    width={34}
-                    height={34}
-                  />
-                </Link>
+              <li className="font-manrope text-baese underline">
+                <Link href="">Terms of Service</Link>
               </li>
-              <li>
-                <Link href="">
-                  <Image
-                    src="/TwitterX.svg"
-                    alt="TwitterX-icon"
-                    className="w-8 h-8"
-                    width={34}
-                    height={34}
-                  />
-                </Link>
-              </li>
-              <li>
-                <Link href="">
-                  <Image
-                    src="/Instagram.svg"
-                    alt="Instagram-icon"
-                    className="w-8 h-8"
-                    width={34}
-                    height={34}
-                  />
-                </Link>
-              </li>
-              <li>
-                <Link href="">
-                  <Image
-                    src="/LinkedIn.svg"
-                    alt="LinkedIn-icon"
-                    className="w-8 h-8"
-                    width={34}
-                    height={34}
-                  />
-                </Link>
+
+              <li className="font-manrope text-baese underline">
+                <Link href="">Privacy Policy</Link>
               </li>
             </ul>
           </nav>
@@ -230,16 +199,20 @@ function BenefitCard({
   descr: string;
 }) {
   return (
-    <article className="flex flex-col items-center bg-white px-5 py-10 rounded-3xl">
+    <article className="flex flex-col items-center bg-white px-[1.75rem] py-[3.625rem] rounded-3xl h-full">
       <Image
         src={img}
         alt="icon"
-        className="w-20 h-20"
-        width={80}
-        height={80}
+        className="w-[5.4375rem] h-[5.4375rem]"
+        width={87}
+        height={87}
       />
-      <h4 className="text-xl text-center font-medium mt-8 mb-3">{title}</h4>
-      <p className="text-center">{descr}</p>
+      <h4 className="text-2xl text-center font-semibold font-neue mt-8 mb-3">
+        {title}
+      </h4>
+      <p className="text-center text-[1.1875rem] font-manrope leading-[1.75rem]">
+        {descr}
+      </p>
     </article>
   );
 }
@@ -254,10 +227,20 @@ function CompliancePointCard({
   descr: string;
 }) {
   return (
-    <article className="flex flex-col gap-3">
-      <Image src={img} alt="icon" className="w-6 h-6" width={24} height={24} />
-      <h4 className="text-lg font-medium">{title}</h4>
-      <p className="">{descr}</p>
+    <article className="flex flex-col items-center md:items-start gap-4">
+      <Image
+        src={img}
+        alt="icon"
+        className="w-[3.125rem] h-[3.125rem]"
+        width={50}
+        height={50}
+      />
+      <h4 className="text-[1.375rem] text-center md:text-left font-bold font-inter pb-0">
+        {title}
+      </h4>
+      <p className="text-[1.1rem] text-center md:text-left leading-[2.1744rem] font-manrope">
+        {descr}
+      </p>
     </article>
   );
 }

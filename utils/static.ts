@@ -41,3 +41,21 @@ export const secondaryNav: NavButtonProps[] = [
     href: "/help-center",
   },
 ];
+
+export const landingHeaderNav = [
+  {
+    label: "Product",
+    href: "#",
+    name: "product",
+  },
+  {
+    label: "Features",
+    href: "#",
+    name: "features",
+  },
+  {
+    label: "Testimonials",
+    href: "#",
+    name: "testimonials",
+  },
+];
