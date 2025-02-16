@@ -40,7 +40,7 @@ export default function Home() {
           </p>
           <Link
             href={AppRoutes.auth.signup.path}
-            className="font-medium px-10  rounded-xl bg-black  w-[11.31rem] h-[3.19rem] flex items-center justify-center  md:mx-auto sm:mx-0"
+            className="font-medium px-10  rounded-xl bg-black  w-[11.31rem] h-[3.19rem] flex items-center justify-center   sm:mx-0"
           >
             Get Started
           </Link>

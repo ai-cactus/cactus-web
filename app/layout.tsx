@@ -34,6 +34,8 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Theraptly",
   description: "Theraptly is a platform for AI compliance analysis",
+  keywords: ["ai", "compliance", "healthcare", "documents", "analysis"],
+  metadataBase: new URL("https://theraptly.com"),
 };
 
 export default function RootLayout({
