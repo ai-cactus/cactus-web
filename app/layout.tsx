@@ -49,7 +49,7 @@ export default function RootLayout({
       className={`${inter.variable} ${dmSans.variable} ${manrope.variable}`}
     >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-[1440px] m-auto`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-[1440px] m-auto h-full`}
         suppressHydrationWarning={true}
       >
         <ReactQueryProvider>{children}</ReactQueryProvider>

@@ -34,7 +34,7 @@ function Dashboard() {
   // }, [status, data, file]);
 
   return (
-    <div className="font-inter flex items-center justify-center my-[5rem]">
+    <div className="font-inter flex items-center justify-center my-[5rem] px-4 md:px-0">
       <div>
         <div className="mb-7">
           <h1 className="text-[#5A74EB] text-3xl font-semibold leading-[120%] pb-3">

@@ -1,13 +1,34 @@
 import Image from "next/image";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { primaryNav, secondaryNav } from "@/utils/static";
 import { logOut } from "@/lib/auth";
+import { motion } from "motion/react";
 import Assets from "@/lib/assets";
 import NavButton from "./nav-button";
+import { cn } from "@/utils/utils";
+import useOutsideClick from "@/hooks/useOutsideClick";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
-const Sidebar = () => {
+interface IProps {
+  isMenuOpen: boolean;
+  setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+const Sidebar = ({ isMenuOpen, setIsMenuOpen }: IProps) => {
+  const [ref] = useOutsideClick(() => setIsMenuOpen(false));
+  const isLargeScreen = useMediaQuery("(min-width: 1024px)");
   return (
-    <aside className="flex flex-col fixed inset-0  w-[17.5rem]  bg-[#fdfdfd] border-r border-r-[#1C1C1C1A] py-[1.875rem]">
+    <motion.aside
+      ref={ref}
+      className={cn(
+        "z-[100] flex flex-col fixed inset-0  w-[17.5rem]  bg-[#fdfdfd] border-r border-r-[#1C1C1C1A] py-[1.875rem]"
+        // {
+        //   "flex z-[1000]": isMenuOpen,
+        //   "hidden lg:flex": !isMenuOpen,
+        // }
+      )}
+      animate={{ translateX: isMenuOpen || isLargeScreen ? 0 : -450 }}
+    >
       <header className="bg-white  flex items-center ">
         <Image
           src={Assets.Logo}
@@ -57,7 +78,7 @@ const Sidebar = () => {
           </nav>
         </section>
       </div>
-    </aside>
+    </motion.aside>
   );
 };
 

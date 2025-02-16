@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppRoutes } from "@/utils/routes";
 
-function page() {
+function Signup() {
   const router = useRouter();
   const [first_name, setFirst_name] = useState("");
   const [last_name, setLast_name] = useState("");
@@ -53,7 +53,7 @@ function page() {
   };
 
   return (
-    <div className="flex flex-col justify-center min-h-screen px-10 py-16">
+    <div className="flex flex-col justify-center min-h-screen px-6 xs:px-10 py-16">
       <Image
         src={"/Logo-Light.png"}
         alt="cactus ai"
@@ -161,4 +161,4 @@ function page() {
   );
 }
 
-export default page;
+export default Signup;
