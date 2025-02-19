@@ -113,7 +113,7 @@ export default function Home() {
             <CompliancePointCard
               img="/analysis.svg"
               title="Manual Policy Updates"
-              descr="Eliminate the guesswork—our AI suggests policy improvements to meet current requirements."
+              descr="Eliminate the guesswork—our AI suggests policy improvements to meet current requirement."
             />
           </div>
           <div className="p-10">
