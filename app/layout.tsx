@@ -48,6 +48,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${dmSans.variable} ${manrope.variable}`}
     >
+      <link rel="icon" href="/images/icon.png" type="image/png" sizes="55x54" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-[1440px] m-auto h-full`}
         suppressHydrationWarning={true}
