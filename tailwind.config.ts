@@ -15,6 +15,12 @@ export default {
         neue: ["Neue Haas Grotesk Display Pro"],
         helvetica: ["Helvetica Neue"],
       },
+      maxWidth: {
+        "app-max": "75rem",
+      },
+      width: {
+        "app-max": "75rem",
+      },
       colors: {
         primary: "#3E6FF7",
         "primary-20": "#4758E0",

@@ -24,3 +24,14 @@ export const formatFileSize = (sizeInBytes: number): string => {
 export const isValidFileType = (file: File, validExtensions: string[]) => {
   return validExtensions.some((ext) => file.name.toLowerCase().endsWith(ext));
 };
+
+/**
+ * Function to cut text according to the length parameter
+ * @param text
+ * @param length
+ * @returns
+ */
+
+export const cutText = (text: string, length: number) => {
+  return text.length > length ? text.slice(0, length) + "..." : text;
+};
