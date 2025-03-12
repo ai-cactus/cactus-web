@@ -70,7 +70,10 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }: IProps) => {
             ))}
             <NavButton
               href={"#"}
-              onClick={logOut}
+              onClick={(e) => {
+                e.preventDefault();
+                logOut();
+              }}
               icon={"/exit_ic.svg"}
               label={"Logout"}
               className="text-[#D55F5A]"

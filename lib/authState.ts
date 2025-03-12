@@ -24,7 +24,7 @@ export const useAuthState = () => {
           body: JSON.stringify({}),
           headers: {
             // @ts-ignore
-            authorization: `Bearer ${user.accessToken}`,
+            authorization: `Bearer ${user?.accessToken}`,
           },
         });
         // console.log("User is loaded", user);

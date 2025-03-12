@@ -1,17 +1,20 @@
+import { Article1, Article2 } from "@/components/blog/article";
 import { RequestADemoForm } from "@/components/forms";
 import { LandingHeaderNav } from "@/components/main/navs";
 import Header from "@/components/website/header";
 import Assets from "@/lib/assets";
 import WebsiteAssets from "@/lib/assets/website-assets";
 import { AppRoutes } from "@/utils/routes";
+import { blogPageData } from "@/utils/static";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 
-export default function Home() {
+export default function Blog() {
   return (
     <div className="relative bg-[#E7EBFD33] overflow-x-hidden">
       <Header />
+
       <section
         id="intro"
         className="relative bg-white bg-[url(/background-1.png)] bg-no-repeat bg-cover  md:bg-left-top"
@@ -32,86 +35,55 @@ export default function Home() {
             Get Started
           </Link>
         </div>
-        <div className="absolute hidden md:block md:top-[calc(50%-250px)] lg:top-[100px] md:-right-24 lg:-right-10 z-20">
-          {/* <div className="absolute hidden md:block md:top-[calc(50%-250px)] lg:top-[calc(50%-525px)] md:-right-24 lg:-right-9 z-20"> */}
-          <Image
-            src={WebsiteAssets.Chips}
-            alt="spinning animation"
-            className="md:h[500px] lg:h-[930px] md:w-[500px] lg:w-[930px] object-contain"
-            width={650}
-            height={650}
-          />
+      </section>
+
+      <section className="py-8 max-w-app-max mx-auto">
+        <h3 className="font-neue font-semibold text-2xl pb-8">Trending News</h3>
+        <div>
+          <div className="flex items-center justify-center gap-8">
+            <Article1 article={blogPageData[0]} />
+            <div className="flex flex-col gap-8">
+              <Article2 article={blogPageData[0]} />
+              <Article2 article={blogPageData[0]} />
+            </div>
+          </div>
         </div>
       </section>
-      <section
-        id="benefits"
-        className="border border-white bg-[#E9EDFD] bg-[url(/looper.png),linear-gradient(180deg,white,transparent)] bg-no-repeat bg-right-top bg-[400px_400px,100%_100%] z-10 relative p-4 md:p-16 md:pb-[calc(4.7rem+2.735rem)] pt-10 pb-10 lg:max-w-[calc(75rem+80px)] mx-0 lg:mx-auto -mt-24 rounded-[30px] custom-shadow"
-      >
-        <h3 className="w-fit mx-auto border text-gray-600 border-gray-400 rounded-lg px-4 py-1">
-          Benefits
-        </h3>
-        <h2 className="text-[2rem] lg:text-[2.875rem] leading-[2.375rem] lg:leading-[3.375rem] font-medium tracking-tighter font-inter text-center mt-10 mb-5">
-          Automate your compliance work, saving you hours and money with our{" "}
-          <span className="whitespace-nowrap">AI-driven</span> platform
-        </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-6 max-w-[22rem] mx-auto lg:max-w-full">
-          <BenefitCard
-            img="/icon-1.svg"
-            title="Automated Gap Analysis"
-            descr="Instantly identify discrepancies between your policies and state health regulations."
-          />
-          <div className="relative lg:top-[2.735rem]">
-            <BenefitCard
-              img="/icon-2.svg"
-              title="Actionable Insights"
-              descr="Get suggestions on how to improve your policies to meet compliance standards."
-            />
+
+      <section className="max-w-app-max mx-auto my-[4.125rem]">
+        <div className="flex items-center justify-between">
+          <div className="flex-1">
+            <h3 className="text-[#667085] font-inter text-lg pb-3">
+              THERAPTYLY BLOG:
+            </h3>
+            <h2 className="font-medium font-neue text-[3.625rem] leading-[4.25rem]">
+              Navigating Healthcare Compliance
+            </h2>
           </div>
-          <BenefitCard
-            img="/icon-3.svg"
-            title="Audit-Ready Documents"
-            descr="Automatically find and compile supporting documents for audits."
-          />
+          <div className="flex-1">
+            <p className="text-[#667085] font-inter text-sm leading-[1.875rem]">
+              Stay up to date with the most recent developments in health
+              compliance, regulatory changes, and industry best practices from
+              around the world.
+            </p>
+          </div>
         </div>
       </section>
-      <section id="capabilities" className="pt-[6.125rem] pb-20">
-        <h3 className="w-fit mx-auto border text-gray-600 font-medium font-manrope text-sm border-gray-400 rounded-lg px-4 py-2">
-          Pain Points Solved for You
+
+      <section className="py-8 max-w-app-max mx-auto">
+        <h3 className="font-neue font-semibold text-2xl pb-8">
+          All Blog Posts
         </h3>
-        <h2 className="text-[2rem] lg:text-[2.875rem] font-semibold text-center mt-10 mb-5 lg:mb-10 px-4 xl:px-0 leading-[2.375rem] lg:leading-[3rem]">
-          We Make Your Complex Compliance Issues Easy
-        </h2>
-        <section className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 px-4 xl:px-0 lg:max-w-[72.25rem] mx-4 lg:mx-10 xl:mx-auto">
-          <div className="border-b-[0.5px] md:border-r-[0.5px] border-[#CFCFCF] md:border-[black] p-10">
-            <CompliancePointCard
-              img="/analysis.svg"
-              title="Complex Regulatory Landscape"
-              descr="Navigating ever-changing regulations can be overwhelming. Our AI keeps you updated and compliant."
-            />
+        <div>
+          <div className="grid grid-cols-2 items-center justify-center gap-8">
+            <Article1 article={blogPageData[0]} />
+            <Article1 article={blogPageData[0]} />
+            <Article1 article={blogPageData[0]} />
+            <Article1 article={blogPageData[0]} />
           </div>
-          <div className="border-b-[0.5px] border-[#CFCFCF] md:border-[black] p-10">
-            <CompliancePointCard
-              img="/analysis.svg"
-              title="Time-Consuming Audits"
-              descr="We streamline the audit process, providing all required documentation with minimal effort."
-            />
-          </div>
-          <div className="border-b-[0.5px] md:border-b-0 md:border-r-[0.5px] border-[#CFCFCF] md:border-[black] p-10">
-            <CompliancePointCard
-              img="/analysis.svg"
-              title="Manual Policy Updates"
-              descr="Eliminate the guesswork—our AI suggests policy improvements to meet current requirement."
-            />
-          </div>
-          <div className="p-10">
-            <CompliancePointCard
-              img="/analysis.svg"
-              title="Risk of Non-Compliance"
-              descr="Reduce your liability and ensure you meet all state-level health compliance obligations."
-            />
-          </div>
-        </section>
+        </div>
       </section>
+
       <section
         id="request-a-demo"
         className="bg-[#657FEF] text-white max-w-[74.375rem] mx-auto rounded-t-[30px] rounded-b-[0px] lg:rounded-b-[30px] bg-gradient-to-b from-[#657FEF] to-[#5744EB]"
@@ -157,7 +129,7 @@ export default function Home() {
             height={63}
           />
           <p className="text-base font-manrope">
-            © {new Date().getFullYear()} Theraptly AI • All right reserved
+            © 2024 Cactus AI • All right reserved
           </p>
           <nav>
             <ul className="flex flex-row gap-4">

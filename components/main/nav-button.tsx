@@ -17,6 +17,7 @@ export interface NavButtonProps extends LinkProps {
 const _NavButton = (props: NavButtonProps) => {
   const segment = useSelectedLayoutSegment();
   const pathname = usePathname();
+
   const isActivePathName = pathname === props.href;
   return (
     <div className="relative">

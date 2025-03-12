@@ -59,3 +59,48 @@ export const landingHeaderNav = [
     name: "testimonials",
   },
 ];
+
+export const blogPageData = [
+  {
+    id: 1,
+    title: "FDA Proposes New Guidelines for AI-Enabled Medical Devices",
+    body: "The Food and Drug Administration has released draft guidance aimed at developers of AI-powered medical devices. The proposed guidelines focus on ensuring patient safety and effic",
+    author: "Theraptly Team",
+    date: "2025-02-26T17:40:23.564Z",
+    image: "/images/blog1.png",
+  },
+  {
+    id: 2,
+    title: "FDA Proposes New Guidelines for AI-Enabled Medical Devices",
+    body: "The Food and Drug Administration has released draft guidance aimed at developers of AI-powered medical devices. The proposed guidelines focus on ensuring patient safety and effic",
+    author: "Theraptly Team",
+    date: "2025-02-26T17:40:23.564Z",
+    image: "/images/blog1.png",
+  },
+  {
+    id: 3,
+    title: "FDA Proposes New Guidelines for AI-Enabled Medical Devices",
+    body: "The Food and Drug Administration has released draft guidance aimed at developers of AI-powered medical devices. The proposed guidelines focus on ensuring patient safety and effic",
+    author: "Theraptly Team",
+    date: "2025-02-26T17:40:23.564Z",
+    image: "/images/blog1.png",
+  },
+  {
+    id: 4,
+    title: "FDA Proposes New Guidelines for AI-Enabled Medical Devices",
+    body: "The Food and Drug Administration has released draft guidance aimed at developers of AI-powered medical devices. The proposed guidelines focus on ensuring patient safety and effic",
+    author: "Theraptly Team",
+    date: "2025-02-26T17:40:23.564Z",
+    image: "/images/blog1.png",
+  },
+  {
+    id: 5,
+    title: "FDA Proposes New Guidelines for AI-Enabled Medical Devices",
+    body: "The Food and Drug Administration has released draft guidance aimed at developers of AI-powered medical devices. The proposed guidelines focus on ensuring patient safety and effic",
+    author: "Theraptly Team",
+    date: "2025-02-26T17:40:23.564Z",
+    image: "/images/blog1.png",
+  },
+];
+
+export type ArticleType = ReturnType<() => typeof blogPageData>[0];

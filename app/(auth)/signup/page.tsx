@@ -11,6 +11,7 @@ import React, { useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { AppRoutes } from "@/utils/routes";
+import Assets from "@/lib/assets";
 
 function Signup() {
   const router = useRouter();
@@ -55,11 +56,11 @@ function Signup() {
   return (
     <div className="flex flex-col justify-center min-h-screen px-6 xs:px-10 py-16">
       <Image
-        src={"/Logo-Light.png"}
+        src={Assets.Logo}
         alt="cactus ai"
         width={210}
-        height={60}
-        className="inline-block mx-auto"
+        height={10}
+        className=" mx-auto"
       />
       <h2 className="pt-6 pb-2 text-[#111111] text-2xl font-bold text-center">
         Create a new account
