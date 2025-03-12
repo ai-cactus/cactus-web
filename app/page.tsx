@@ -157,7 +157,7 @@ export default function Home() {
             height={63}
           />
           <p className="text-base font-manrope">
-            © 2024 Cactus AI • All right reserved
+            © {new Date().getFullYear()} Theraptly AI • All right reserved
           </p>
           <nav>
             <ul className="flex flex-row gap-4">

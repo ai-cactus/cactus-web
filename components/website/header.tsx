@@ -2,6 +2,7 @@ import WebsiteAssets from "@/lib/assets/website-assets";
 import Image from "next/image";
 import React, { Suspense } from "react";
 import { LandingHeaderNav } from "../main/navs";
+import Assets from "@/lib/assets";
 
 const Header = () => {
   return (
@@ -9,7 +10,7 @@ const Header = () => {
       <div className="mx-4  py-5 lg:max-w-[75rem] lg:mx-10 xl:mx-auto flex flex-row justify-between items-center">
         <div>
           <Image
-            src={WebsiteAssets.LogoLight}
+            src={Assets.Logo}
             alt="Website Logo"
             className="w-[12.25rem] h-[4.2rem]"
           />

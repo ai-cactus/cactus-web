@@ -15,7 +15,7 @@ export function LandingHeaderNav() {
   return (
     <section role="menu">
       <div role="menubar" className="md:hidden">
-        <button onClick={() => setIsMenuOpen(true)}>
+        {/* <button onClick={() => setIsMenuOpen(true)}>
           <Image
             src="/menu.png"
             alt="menu open"
@@ -23,12 +23,18 @@ export function LandingHeaderNav() {
             width={36}
             height={36}
           />
-        </button>
+        </button> */}
+        <Link
+          href={AppRoutes.auth.signup.path}
+          className="px-8 py-3 rounded-full bg-black text-white text-[1rem] font-semibold w-full h-[2.75rem] "
+        >
+          Get Started
+        </Link>
       </div>
       {/* Desktop nav bar */}
       <nav className="hidden md:block bg-transparentrelative h-fit max-w-fit w-fit">
         <ul role="menuitem" className="flex  gap-[2.125rem] space-y-0 ">
-          <div className="flex items-center gap-16 px-[2rem]">
+          {/* <div className="flex items-center gap-16 px-[2rem]">
             {landingHeaderNav.map((item, i) => (
               <li key={i}>
                 <Link
@@ -39,7 +45,7 @@ export function LandingHeaderNav() {
                 </Link>
               </li>
             ))}
-          </div>
+          </div> */}
 
           <li>
             <Link
@@ -72,7 +78,6 @@ export function LandingHeaderNav() {
           </button>
         </div>
         <ul role="menuitem" className="flex flex-col items-center gap-8  p-8 ">
-          {/* <div className="flex flex-col items-center gap-8 px-[2rem]"> */}
           {landingHeaderNav.map((item, i) => (
             <li key={i}>
               <Link
@@ -83,7 +88,6 @@ export function LandingHeaderNav() {
               </Link>
             </li>
           ))}
-          {/* </div> */}
 
           <li className="mt-6">
             <Link

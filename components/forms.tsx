@@ -114,20 +114,20 @@ export function RequestADemoForm() {
             disabled={loading}
             className="px-6  py-2 w-full h-[8.6875rem] rounded-[20px] placeholder:text-white disabled:opacity-50 bg-transparent"
           ></textarea>
-          <button
-            type="submit"
-            disabled={loading}
-            className="absolute top-2 right-3 w-fit font-medium px-8 py-3 rounded-full bg-[#14F195] border border-[#FFFFFF78]  text-black disabled:opacity-50 flex items-center justify-center gap-1"
-          >
-            <Image
-              src={WebsiteAssets.Mail}
-              width={20}
-              height={20}
-              alt="submit icon"
-            />
-            <p>{loading ? "Submitting..." : "Submit"}</p>
-          </button>
         </div>
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-fit font-medium px-8 py-3 rounded-full bg-[#14F195]  text-black disabled:opacity-50 flex items-center justify-center gap-1"
+        >
+          <Image
+            src={WebsiteAssets.Mail}
+            width={20}
+            height={20}
+            alt="submit icon"
+          />
+          <p>{loading ? "Submitting..." : "Submit"}</p>
+        </button>
         {error && <p className="text-red-400">* {error}</p>}
         {success && (
           <p className="text-green-400">Request submitted successfully!</p>
