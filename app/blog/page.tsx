@@ -1,16 +1,18 @@
 import { Article1, Article2 } from "@/components/blog/article";
 import { RequestADemoForm } from "@/components/forms";
-import { LandingHeaderNav } from "@/components/main/navs";
 import Header from "@/components/website/header";
 import Assets from "@/lib/assets";
 import WebsiteAssets from "@/lib/assets/website-assets";
+import { fetchBlogs } from "@/server/actions/blog.actions";
 import { AppRoutes } from "@/utils/routes";
 import { blogPageData } from "@/utils/static";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 
-export default function Blog() {
+export default async function Blog() {
+  const blogs = await fetchBlogs();
+  console.log(blogs);
   return (
     <div className="relative bg-[#E7EBFD33] overflow-x-hidden">
       <Header />
