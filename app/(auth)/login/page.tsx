@@ -98,7 +98,7 @@ function Login() {
             </div>
             <GoogleAuthButton />
             <p className="text-center text-[#4b4b4b] text-base font-normal">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link href="/signup" className="text-[#4b62cc] text-base font-bold">
                 Sign Up
               </Link>
