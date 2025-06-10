@@ -36,7 +36,7 @@ export function InputField(props: InputFieldProps) {
       <div className="relative">
         <input
           {...props}
-          type={props.type === "password" ? showPassword : props.type}
+          {...(props.type === "password" ? { type: showPassword } : {})}
           className="py-3 px-5 border border-[#cecece] rounded-xl text-base min-w-0 w-full"
         />
         <RenderIf condition={props.type === "password"}>

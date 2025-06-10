@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import FeaturesSection from "@/components/FeaturesSection";
 
 function Complete() {
   const { auth, loading: authLoading } = useAuthState();
@@ -58,14 +59,17 @@ function Complete() {
   }
 
   return (
-    <div className="flex flex-col justify-center min-h-screen px-6 xs:px-10 py-16">
-      <Image
-        src={"/Logo-Light.png"}
-        alt="Theraptly"
-        width={210}
-        height={60}
-        className="inline-block mx-auto"
-      />
+    <div className="min-h-screen flex flex-col lg:flex-row">
+      {/* Left side - Complete Profile Form */}
+      <div className="lg:flex-1 flex items-center justify-center p-6 my-8">
+        <div className="w-full max-w-md pl-6">
+          <Image
+            src={"/Logo-Light.png"}
+            alt="Theraptly"
+            width={210}
+            height={60}
+            className="block"
+          />
       <h2 className="pt-6 pb-2 text-[#111111] text-2xl font-bold text-center">
         Complete your profile setup
       </h2>
@@ -129,7 +133,16 @@ function Complete() {
             {loading ? "•••" : "Complete your profile"}
           </FilledButton>
         </div>
-      </form>
+          </form>
+        </div>
+      </div>
+      
+      {/* Right side - Features Section */}
+      <div className="hidden lg:flex w-[50%] bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 rounded-3xl m-8 mr-8">
+        <div className="w-full p-12">
+          <FeaturesSection />
+        </div>
+      </div>
     </div>
   );
 }

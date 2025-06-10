@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppRoutes } from "@/utils/routes";
 import Assets from "@/lib/assets";
+import FeaturesSection from "@/components/FeaturesSection";
 
 function Signup() {
   const router = useRouter();
@@ -54,14 +55,17 @@ function Signup() {
   };
 
   return (
-    <div className="flex flex-col justify-center min-h-screen px-6 xs:px-10 py-16">
-      <Image
-        src={Assets.Logo}
-        alt="cactus ai"
-        width={210}
-        height={10}
-        className=" mx-auto"
-      />
+    <div className="min-h-screen flex flex-col lg:flex-row">
+      {/* Left side - Signup Form */}
+      <div className="lg:flex-1 flex items-center justify-center p-6 my-8">
+        <div className="w-full max-w-md pl-6">
+          <Image
+            src={Assets.Logo}
+            alt="cactus ai"
+            width={210}
+            height={60}
+            className="block"
+          />
       <h2 className="pt-6 pb-2 text-[#111111] text-2xl font-bold text-center">
         Create a new account
       </h2>
@@ -157,7 +161,16 @@ function Signup() {
             Login
           </Link>
         </p>
-      </form>
+          </form>
+        </div>
+      </div>
+      
+      {/* Right side - Features Section */}
+      <div className="hidden lg:flex w-[50%] bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 rounded-3xl m-3 mr-8">
+        <div className="w-full p-16">
+          <FeaturesSection />
+        </div>
+      </div>
     </div>
   );
 }
