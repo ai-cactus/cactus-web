@@ -1,6 +1,6 @@
 import { Article1, Article2 } from "@/components/blog/article";
 import { RequestADemoForm } from "@/components/forms";
-import Header from "@/components/website/header";
+import Header from "../../components/website/header";
 import Assets from "@/lib/assets";
 import WebsiteAssets from "@/lib/assets/website-assets";
 import { fetchBlogs } from "@/server/actions/blog.actions";
