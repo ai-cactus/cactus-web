@@ -64,7 +64,7 @@ function Complete() {
       <div className="lg:flex-1 flex items-center justify-center p-6 my-8">
         <div className="w-full max-w-md pl-6">
           <Image
-            src={"/Logo-Light.png"}
+            src={"Assets.Logo"}
             alt="Theraptly"
             width={210}
             height={60}
