@@ -22,10 +22,7 @@ export const AppRoutes = {
       name: "client-type",
       path: "/client-type",
     },
-     ProfileSetup: {
-      name: "profile-setup",
-      path: "/profile-setup",
-    },
+     
   },
   main: {
     dashboard: {
@@ -51,6 +48,10 @@ export const AppRoutes = {
     profile: {
       name: "profile",
       path: "/profile",
+    },
+    ProfileSetup: {
+      name: "profile-setup",
+      path: "/profile-setup",
     },
   },
 };

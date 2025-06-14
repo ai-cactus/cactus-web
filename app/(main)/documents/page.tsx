@@ -12,11 +12,11 @@ function Documents() {
   const { data: documentsResponse, isLoading } = useGetDocuments();
   
   // Safely extract documents array from response
-  const documents = Array.isArray(documentsResponse?.data) 
-    ? documentsResponse.data 
-    : Array.isArray(documentsResponse)
-    ? documentsResponse
-    : [];
+  // const documents = Array.isArray(documentsResponse?.data) 
+  //   ? documentsResponse?.data 
+  //   : Array.isArray(documentsResponse)
+  //   ? documentsResponse
+  //   : [];
 
   return (
     <div className="px-6 py-5 sm:px-10">
@@ -92,7 +92,7 @@ function Documents() {
 
           {/* Table Body */}
           <tbody className="divide-y divide-gray-200">
-            {documents?.length > 0 ? (
+            {/* {documents?.length > 0 ? (
               documents?.map((doc) => (
                 doc?._id ? (
                   <Link 
@@ -110,7 +110,7 @@ function Documents() {
                   No documents found. Upload your first document to get started.
                 </td>
               </tr>
-            )}
+            )} */}
           </tbody>
         </Table>
       )}
