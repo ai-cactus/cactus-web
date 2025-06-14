@@ -15,7 +15,6 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import FeaturesSection from "@/components/FeaturesSection";
-import Assets from "@/lib/assets";
 
 function Login() {
   const router = useRouter();
@@ -39,12 +38,12 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
+    <div className="min-h-screen flex flex-col lg:flex-row font-inter">
       {/* Left side - Login Form */}
       <div className="lg:flex-1 flex items-center justify-center p-6 my-8">
         <div className="w-full max-w-md pl-6" id="login-content">
           <Image
-            src={Assets.Logo}
+            src={"/Logo-Light.png"}
             alt="Theraptly"
             width={210}
             height={60}
@@ -107,7 +106,7 @@ function Login() {
           </form>
         </div>
       </div>
-
+      
       {/* Right side - Features Section */}
       <div className="hidden lg:flex w-[50%] bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 rounded-3xl m-8 mr-8">
         <div className="w-full p-12">

@@ -2,152 +2,120 @@
 
 import { FilledButton, OutlinedButton } from "@/components/buttons";
 import { Table, TableRow } from "@/components/table";
-import { UploadedDocumentContext } from "@/lib/context";
 import { useGetDocuments } from "@/services/user/queries";
 import { AppRoutes } from "@/utils/routes";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React from "react";
 
 function Documents() {
-  const { data: documents } = useGetDocuments();
+  const { data: documentsResponse, isLoading } = useGetDocuments();
+  
+  // Safely extract documents array from response
+  const documents = Array.isArray(documentsResponse?.data) 
+    ? documentsResponse.data 
+    : Array.isArray(documentsResponse)
+    ? documentsResponse
+    : [];
+
   return (
-    <div className="px-10 py-5">
-      <section className="flex flex-row gap-4 justify-between items-center">
+    <div className="px-6 py-5 sm:px-10">
+      {/* Header Section */}
+      <section className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center mb-8">
         <div>
-          <h1 className="text-[#5A74EB] text-3xl font-semibold mb-2">
+          <h1 className="text-[#5A74EB] text-2xl sm:text-3xl font-semibold mb-2">
             Uploaded Documents
           </h1>
-          <p className="text-black/70">
+          <p className="text-gray-600">
             Documents and attachments that have been uploaded.
           </p>
         </div>
-        <div className="flex flex-row gap-3">
-          <OutlinedButton className="border-[#4b62cc] text-[#4b62cc] flex flex-row items-center gap-1">
+        
+        {/* Action Buttons */}
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <OutlinedButton className="border-[#4b62cc] text-[#4b62cc] flex items-center justify-center gap-2 py-2 px-4">
             <Image
               src="/download.svg"
               alt="download"
-              width={24}
-              height={24}
-              className="h-6 w-auto"
-            />{" "}
-            Download all
+              width={20}
+              height={20}
+              className="h-5 w-5"
+            />
+            <span>Download all</span>
           </OutlinedButton>
           <Link href={"/dashboard"}>
-            <FilledButton className="flex flex-row items-center gap-1">
+            <FilledButton className="flex items-center justify-center gap-2 py-2 px-4">
               <Image
                 src="/plus.svg"
                 alt="upload"
-                width={24}
-                height={24}
-                className="h-6 w-auto"
+                width={20}
+                height={20}
+                className="h-5 w-5"
               />
-              Upload New Document
+              <span>Upload New Document</span>
             </FilledButton>
           </Link>
         </div>
       </section>
-      <Table className="my-8">
-        <section className="flex flex-row gap-2 text-black/70 font-semibold">
-          <div className="flex-1 flex flex-row gap-1 items-end">
-            Document name{" "}
-            <Image src="/filter_ic.svg" alt="filter" width={18} height={18} />
-          </div>
-          <div className="w-24 flex flex-row gap-1 items-end">
-            File size{" "}
-            <Image src="/filter_ic.svg" alt="filter" width={18} height={18} />
-          </div>
-          <div className="w-24 flex flex-row gap-1 items-end">
-            Date{" "}
-            <Image src="/filter_ic.svg" alt="filter" width={18} height={18} />
-          </div>
-          <div className="flex-1 flex flex-row gap-1 items-end"></div>
-        </section>
-        {(documents || []).map((doc, i) => {
-          return (
-            <Link key={i} href={AppRoutes.main.document.path(doc._id)}>
-              <TableRow item={doc} />
-            </Link>
-          );
-        })}
-      </Table>
+
+      {/* Documents Table */}
+      {isLoading ? (
+        <div className="flex justify-center items-center h-64">
+          <p>Loading documents...</p>
+        </div>
+      ) : (
+        <Table className="w-full">
+          {/* Table Header */}
+          <thead className="bg-gray-50">
+            <tr className="text-left text-gray-600 font-medium">
+              <th className="py-3 px-4 flex items-center gap-1">
+                Document name
+                <button className="text-gray-400 hover:text-gray-600">
+                  <Image src="/filter_ic.svg" alt="filter" width={16} height={16} />
+                </button>
+              </th>
+              <th className="py-3 px-4 w-32 flex items-center gap-1">
+                File size
+                <button className="text-gray-400 hover:text-gray-600">
+                  <Image src="/filter_ic.svg" alt="filter" width={16} height={16} />
+                </button>
+              </th>
+              <th className="py-3 px-4 w-32 flex items-center gap-1">
+                Date
+                <button className="text-gray-400 hover:text-gray-600">
+                  <Image src="/filter_ic.svg" alt="filter" width={16} height={16} />
+                </button>
+              </th>
+              <th className="py-3 px-4 w-24">Actions</th>
+            </tr>
+          </thead>
+
+          {/* Table Body */}
+          <tbody className="divide-y divide-gray-200">
+            {documents?.length > 0 ? (
+              documents?.map((doc) => (
+                doc?._id ? (
+                  <Link 
+                    key={doc?._id} 
+                    href={AppRoutes.main.document.path(doc?._id) || "#"}
+                    passHref
+                  >
+                    <TableRow item={doc} />
+                  </Link>
+                ) : null
+              )).filter(Boolean)
+            ) : (
+              <tr>
+                <td colSpan={4} className="py-8 text-center text-gray-500">
+                  No documents found. Upload your first document to get started.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      )}
     </div>
   );
 }
 
 export default Documents;
-
-// const documents: Document[] = [
-//     {
-//         id: 1,
-//         title: "Health-compliance-document.pdf",
-//         file_size: "1.2 MB",
-//         date: "Jan 12, 2022",
-//     },
-//     {
-//         id: 2,
-//         title: "Policy_Handbook_2025.pdf",
-//         file_size: "256 KB",
-//         date: "Jul 12, 2023",
-//     },
-//     {
-//         id: 3,
-//         title: "Health-compliance-document.pdf",
-//         file_size: "1.2 MB",
-//         date: "Jan 12, 2022",
-//     },
-//     {
-//         id: 4,
-//         title: "Policy_Handbook_2025.pdf",
-//         file_size: "256 KB",
-//         date: "Jul 12, 2023",
-//     },
-//     {
-//         id: 5,
-//         title: "Health-compliance-document.pdf",
-//         file_size: "1.2 MB",
-//         date: "Jan 12, 2022",
-//     },
-//     {
-//         id: 6,
-//         title: "Policy_Handbook_2025.pdf",
-//         file_size: "256 KB",
-//         date: "Jul 12, 2023",
-//     },
-//     {
-//         id: 7,
-//         title: "Health-compliance-document.pdf",
-//         file_size: "1.2 MB",
-//         date: "Jan 12, 2022",
-//     },
-//     {
-//         id: 8,
-//         title: "Policy_Handbook_2025.pdf",
-//         file_size: "256 KB",
-//         date: "Jul 12, 2023",
-//     },
-//     {
-//         id: 9,
-//         title: "Health-compliance-document.pdf",
-//         file_size: "1.2 MB",
-//         date: "Jan 12, 2022",
-//     },
-//     {
-//         id: 10,
-//         title: "Policy_Handbook_2025.pdf",
-//         file_size: "256 KB",
-//         date: "Jul 12, 2023",
-//     },
-//     {
-//         id: 11,
-//         title: "Health-compliance-document.pdf",
-//         file_size: "1.2 MB",
-//         date: "Jan 12, 2022",
-//     },
-//     {
-//         id: 12,
-//         title: "Policy_Handbook_2025.pdf",
-//         file_size: "256 KB",
-//         date: "Jul 12, 2023",
-//     },
-// ]

@@ -1,3 +1,5 @@
+import ProfileSetup from "@/components/newComponents/profile-setup";
+
 export const AppRoutes = {
   auth: {
     login: {
@@ -19,6 +21,10 @@ export const AppRoutes = {
     clientType: {
       name: "client-type",
       path: "/client-type",
+    },
+     ProfileSetup: {
+      name: "profile-setup",
+      path: "/profile-setup",
     },
   },
   main: {

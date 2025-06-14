@@ -230,7 +230,7 @@ export function MainNav({ setIsMenuOpen }: IProps) {
             className="rounded-full w-12 h-12"
           />
           <div className="max-w-32">
-            <h2 className="text-sm text-[#292d32]  font-semibold">
+            <h2 className="text-sm text-[#292d32] font-semibold">
               {auth.user?.displayName}
             </h2>
             <h3 className="text-[10px] text-[rgba(41,45,50,0.44)] font-sm ">

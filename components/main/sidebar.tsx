@@ -21,7 +21,7 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }: IProps) => {
     <motion.aside
       ref={ref}
       className={cn(
-        "z-[100] flex flex-col fixed inset-0  w-[17.5rem]  bg-[#fdfdfd] border-r border-r-[#1C1C1C1A] py-[1.875rem]"
+        "z-[100] flex flex-col fixed inset-0  w-[17.5rem] font-inter bg-[#fdfdfd] border-r border-r-[#1C1C1C1A] py-[1.875rem]"
         // {
         //   "flex z-[1000]": isMenuOpen,
         //   "hidden lg:flex": !isMenuOpen,
@@ -80,6 +80,16 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }: IProps) => {
             />
           </nav>
         </section>
+<section>
+        <div className="flex gap-4 items-center border rounded-xl p-2">
+          <div className="py-2 px-4 bg-[#0ABF00] font-semibold text-xl text-white rounded-full">B</div>
+          <div>
+            <h1 className="text-lg font-bold">Beacon Behaviour</h1>
+            <p className="text-sm text-[#6D717F]">2 Unread Notifications</p>
+          </div>
+        </div>
+
+</section>
       </div>
     </motion.aside>
   );

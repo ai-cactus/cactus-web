@@ -1,5 +1,6 @@
 import { NavButtonProps } from "@/components/main/nav-button";
 import { AppRoutes } from "./routes";
+import { Building2, ShieldBan, Users } from "lucide-react";
 
 export const primaryNav = [
   {
@@ -20,6 +21,12 @@ export const primaryNav = [
     href: AppRoutes.main.history.path,
     name: AppRoutes.main.history.name,
   },
+  // {
+  //   icon: "/history_ic.svg",
+  //   label: "History",
+  //   href: AppRoutes.auth.profileSetup.path,
+  //   name: AppRoutes.auth.profileSetup.name,
+  // },
 ];
 
 export const secondaryNav: NavButtonProps[] = [
@@ -32,6 +39,21 @@ export const secondaryNav: NavButtonProps[] = [
         icon: "/profile-circle.svg",
         label: "Profile",
         href: "/profile",
+      },
+      {
+        icon: Building2,
+        label: "Billing",
+        href: "/Billing",
+      },
+      {
+        icon: ShieldBan,
+        label: "Security & Privacy",
+        href: "/Security",
+      },
+      {
+        icon: Users,
+        label: "User roles & permission",
+        href: "/Users",
       },
     ],
   },

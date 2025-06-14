@@ -8,7 +8,7 @@ import { motion } from "motion/react";
 export interface NavButtonProps extends LinkProps {
   href: string;
   label: string;
-  icon: string;
+  icon: string | React.ComponentType<{ className?: string }>; // Updated to accept both
   surfix?: ReactNode;
   className?: string;
   routes?: NavButtonProps[];
@@ -17,10 +17,11 @@ export interface NavButtonProps extends LinkProps {
 const _NavButton = (props: NavButtonProps) => {
   const segment = useSelectedLayoutSegment();
   const pathname = usePathname();
-
   const isActivePathName = pathname === props.href;
-  return (
-    <div className="relative">
+
+  
+   return (
+    <div className="relative font-inter">
       {isActivePathName ? (
         <motion.div
           className="absolute inset-o bg-[#f9fafb] rounded-lg w-full h-full z-[-1]"
@@ -36,13 +37,17 @@ const _NavButton = (props: NavButtonProps) => {
             : "text-[#757575]"
         } ${props.className}`}
       >
-        <Image
-          src={props.icon}
-          alt={props.label}
-          width={24}
-          height={24}
-          className="w-4"
-        />
+        {typeof props.icon === 'string' ? (
+          <Image
+            src={props.icon}
+            alt={props.label}
+            width={24}
+            height={24}
+            className="w-4"
+          />
+        ) : (
+          <props.icon className="w-4 h-4" /> // Render the icon component
+        )}
         <span className="flex-1">{props.label}</span>
         {props.surfix}
       </Link>
@@ -56,6 +61,8 @@ const NavButton = (props: NavButtonProps) => {
     return <_NavButton {...props} />;
   }
   return (
+    <div>
+
     <div>
       <_NavButton
         {...props}
@@ -78,7 +85,10 @@ const NavButton = (props: NavButtonProps) => {
           <NavButton key={i} {...route} />
         ))}
       </div>
+
     </div>
+    </div>
+
   );
 };
 

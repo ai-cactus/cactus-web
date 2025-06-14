@@ -5,6 +5,8 @@ import { ErrorModal, LoadingCircleModal } from "@/components/modals";
 import FileComp from "@/components/upload/file-comp";
 import UploadComp from "@/components/upload/upload-comp";
 import { useFetch } from "@/lib/hooks";
+import { FileQuestion, MessageCircleQuestion } from "lucide-react";
+import { FaCircleQuestion } from "react-icons/fa6";
 function Dashboard() {
   const [file, setFile] = useState<File | null>(null);
   const {
@@ -49,12 +51,12 @@ function Dashboard() {
           <UploadComp file={file} setFile={setFile} />
           {file ? <FileComp file={file} setFile={setFile} /> : null}
         </div>
-        <section className="flex flex-row gap-4 justify-between my-12  w-full mx-auto">
-          <div className=""></div>
+        <section className="flex flex-row gap-4 justify-between my-12  w-full mx-auto items-center">
+          <div className="flex gap-2 text-[#6D717F] font-semibold text-lg items-center"><MessageCircleQuestion size={26}/> Help Center</div>
           <div className="flex flex-row gap-4">
             <OutlinedButton>Cancel</OutlinedButton>
             <FilledButton disabled={!file} onClick={handleUpload}>
-              Analyze
+              Preview
             </FilledButton>
           </div>
         </section>
