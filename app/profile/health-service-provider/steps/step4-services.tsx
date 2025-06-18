@@ -155,7 +155,7 @@ export default function Step4Services() {
               <h4 className={`font-semibold mb-4 ${
                 plan.isPopular ? 'text-white' : 'text-gray-900'
               }`}>
-                What's included
+                What&apos;s included
               </h4>
               <ul className="space-y-3">
                 {plan.features.map((feature, index) => (

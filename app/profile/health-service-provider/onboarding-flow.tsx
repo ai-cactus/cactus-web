@@ -1,6 +1,5 @@
 'use client';
 
-import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { OnboardingHeader } from '@/components/onboarding/OnboardingHeader';
 import { useOnboarding } from './steps/context';

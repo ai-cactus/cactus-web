@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 interface OnboardingHeaderProps {
   className?: string;
@@ -16,11 +17,13 @@ export const OnboardingHeader: React.FC<OnboardingHeaderProps> = ({
       <div className="w-full border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4">
           <div className="py-6 flex justify-center">
-            <img 
+            <Image 
               src="/logo-black.png" 
               alt="Therapily Logo"
-
+              width={50}
+              height={50}
               className={logoClassName}
+              priority
             />
           </div>
         </div>

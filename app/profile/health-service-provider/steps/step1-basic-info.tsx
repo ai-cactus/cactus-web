@@ -44,7 +44,7 @@ const Step1BasicInfo: React.FC = () => {
     <div className="w-full max-w-5xl flex-1 flex flex-col items-center px-4">
       <div className="w-full max-w-4xl text-center mb-12">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Let's Set Up Your <span className="text-blue-600">Profile!</span>
+          Let&apos;s Set Up Your <span className="text-blue-600">Profile!</span>
         </h1>
         <p className="text-gray-600 text-lg md:text-xl">
           Welcome to Therapily! Take your time to check the information provided

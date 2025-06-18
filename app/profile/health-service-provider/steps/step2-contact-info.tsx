@@ -164,7 +164,7 @@ export const Step2ContactInfo: React.FC = () => {
             <h1 className="text-3xl font-medium text-gray-900 mb-4">
               👋 Hey Awwal, welcome to <span className="text-blue-500 font-semibold">Theraptly</span>
             </h1>
-            <p className="text-xl text-gray-700 mb-6">Enter your Organization's Information</p>
+            <p className="text-xl text-gray-700 mb-6">Enter your Organization&apos;s Information</p>
           </div>
           
           {/* Progress Bar - Shows this as step 1 of 3 */}
