@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
-import { AppRoutes } from '@/utils/routes';
 
 export default function Home() {
-  redirect(AppRoutes.main.ProfileSetup.path);
+  // Redirect to the health service provider onboarding flow
+  redirect('/profile/health-service-provider');
   return null;
 }
