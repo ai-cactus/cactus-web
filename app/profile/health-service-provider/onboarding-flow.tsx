@@ -1,6 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import { OnboardingHeader } from '@/components/onboarding/OnboardingHeader';
 import { useOnboarding } from './steps/context';
 import Step1BasicInfo from './steps/step1-basic-info';
@@ -15,24 +16,29 @@ const steps = [
   { id: '4', name: 'Services', component: Step4Services },
 ];
 
-function OnboardingWizard() {
-  const { currentStep, prevStep, nextStep, formData } = useOnboarding();
-  const router = useRouter();
+export default function OnboardingFlow() {
+  const searchParams = useSearchParams();
+  const { currentStep, setCurrentStep } = useOnboarding();
+
+  // Initialize step from URL on mount and when searchParams change
+  useEffect(() => {
+    const stepFromUrl = searchParams?.get('step');
+    if (stepFromUrl) {
+      const step = parseInt(stepFromUrl, 10);
+      if (!isNaN(step) && step >= 1 && step <= steps.length) {
+        setCurrentStep(step);
+      }
+    }
+  }, [searchParams, setCurrentStep]);
 
   const CurrentStepComponent = steps[currentStep - 1]?.component;
-  const isFirstStep = currentStep === 1;
-  const isLastStep = currentStep === steps.length;
-
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center p-4 pt-8 pb-16 md:pb-24">
       <OnboardingHeader />
       <div className="w-full max-w-4xl">
-        {/* Current Step Content */}
         {CurrentStepComponent && <CurrentStepComponent />}
       </div>
     </div>
   );
 }
-
-export default OnboardingWizard;

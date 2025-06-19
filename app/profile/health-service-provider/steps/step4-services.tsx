@@ -1,6 +1,9 @@
+'use client';
 import { useState } from 'react';
 import { Check } from 'lucide-react';
 import { useOnboarding } from './context';
+import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 import ProgressBar from '@/components/onboarding/ProgressBar';
 
 interface Plan {
@@ -14,8 +17,10 @@ interface Plan {
 }
 
 export default function Step4Services() {
-  const { nextStep, prevStep } = useOnboarding();
+  const { nextStep, prevStep, markAllStepsCompleted, updateFormData, formData } = useOnboarding();
+  const router = useRouter();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [isValidating, setIsValidating] = useState(false);
 
   const plans: Plan[] = [
     {
@@ -67,9 +72,57 @@ export default function Step4Services() {
     console.log('Selected plan:', planId);
   };
 
-  const handleNext = () => {
-    if (selectedPlan) {
-      nextStep();
+  const validateForm = () => {
+    const missingFields = [];
+    if (!formData.practiceName) missingFields.push('Practice Name');
+    if (!formData.practiceType) missingFields.push('Practice Type');
+    if (!formData.legalBusinessName) missingFields.push('Legal Business Name');
+    if (!formData.primaryContactName) missingFields.push('Primary Contact Name');
+    if (!formData.primaryContactEmail) missingFields.push('Primary Contact Email');
+    if (!formData.email) missingFields.push('Email');
+    if (!formData.phone) missingFields.push('Phone');
+    if (!formData.streetAddress) missingFields.push('Street Address');
+    if (!formData.city) missingFields.push('City');
+    if (!formData.state) missingFields.push('State');
+    if (!formData.zipCode) missingFields.push('ZIP Code');
+    if (formData.services.length === 0) missingFields.push('at least one Service');
+    if (formData.teamMembers.length === 0) missingFields.push('at least one Team Member');
+    if (!formData.termsAccepted) missingFields.push('Terms & Conditions');
+    
+    return {
+      isValid: missingFields.length === 0,
+      missingFields
+    };
+  };
+
+  const handleNext = async () => {
+    if (!selectedPlan) return;
+    
+    setIsValidating(true);
+    
+    // Save the selected plan to form data
+    updateFormData({ plan: selectedPlan });
+    
+    // Validate all required fields
+    const { isValid, missingFields } = validateForm();
+    
+    if (!isValid) {
+      // Show error toast with missing fields
+      const missingFieldsText = missingFields.join(', ');
+      toast.error(`Please complete all required fields: ${missingFieldsText}`);
+      setIsValidating(false);
+      return;
+    }
+    
+    try {
+      // Mark all steps as completed and redirect to step 1
+      await markAllStepsCompleted();
+      router.push('/profile/health-service-provider/steps?step=1');
+    } catch (error) {
+      console.error('Error completing steps:', error);
+      toast.error('An error occurred. Please try again.');
+    } finally {
+      setIsValidating(false);
     }
   };
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import { ToastProvider } from "@/providers/ToastProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,7 +24,10 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <link rel="icon" href="/images/icon.png" type="image/png" sizes="55x54" />
       <body className="antialiased h-full" suppressHydrationWarning={true}>
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ReactQueryProvider>
+          {children}
+          <ToastProvider />
+        </ReactQueryProvider>
       </body>
     </html>
   );

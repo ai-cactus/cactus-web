@@ -8,7 +8,7 @@ interface OnboardingHeaderProps {
 }
 
 export const OnboardingHeader: React.FC<OnboardingHeaderProps> = ({
-  className = '-mt-6',
+  className = '-mt-8',
   logoClassName = 'w-[30px] h-[30px]',
   showBorder = true,
 }) => {

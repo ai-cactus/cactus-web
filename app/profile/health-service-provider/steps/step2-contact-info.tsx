@@ -1,5 +1,7 @@
+'use client';
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, ChevronUp, Upload as UploadIcon, Check, ArrowRight } from 'lucide-react';
+import { toast } from '@/components/ui/toast';
 import ProgressBar from '@/components/onboarding/ProgressBar';
 import { InputField } from '../../../../components/fields';
 import { FilledButton } from '../../../../components/buttons';
@@ -144,6 +146,35 @@ export const Step2ContactInfo: React.FC = () => {
     }));
   };
 
+  // Check if all required sections are completed
+  const allSectionsCompleted = ['organization', 'compliance', 'contact'].every(section => 
+    isSectionCompleted(section)
+  );
+
+  // Show toast when all sections are completed
+  const [hasShownToast, setHasShownToast] = useState(false);
+  
+  useEffect(() => {
+    if (allSectionsCompleted && !hasShownToast) {
+      toast.success('All sections completed! You can now proceed to the next step.');
+      setHasShownToast(true);
+      
+      // Store in session storage to persist across re-renders
+      sessionStorage.setItem('hasShownStep2Toast', 'true');
+    }
+  }, [allSectionsCompleted, hasShownToast]);
+  
+  // Check session storage on component mount
+  useEffect(() => {
+    const hasShown = sessionStorage.getItem('hasShownStep2Toast') === 'true';
+    if (hasShown) {
+      setHasShownToast(true);
+    }
+  }, []);
+
+  // Auto-close sections when they're completed - removed to allow editing
+  // Users can now manually collapse/expand sections as needed
+
   const handleChange = (field: string, value: any) => {
     updateFormData({ [field]: value });
   };
@@ -156,7 +187,7 @@ export const Step2ContactInfo: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 ">
       <div className="max-w-4xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-8">
@@ -168,13 +199,12 @@ export const Step2ContactInfo: React.FC = () => {
           </div>
           
           {/* Progress Bar - Shows this as step 1 of 3 */}
-          <div className="mb-8 flex justify-center">
-            <div className="w-full max-w-md">
-              <ProgressBar 
-                currentStep={1} 
-                totalSteps={3} 
-              />
-            </div>
+          <div className="mb-8">
+            <ProgressBar 
+              currentStep={1} 
+              totalSteps={3}
+              className="max-w-md mx-auto"
+            />
           </div>
         </div>
 
@@ -383,8 +413,15 @@ export const Step2ContactInfo: React.FC = () => {
           <div className="mt-8 py-6 flex justify-center">
             <button
               type="button"
-              onClick={nextStep}
-              disabled={!isSectionCompleted('organization') || !isSectionCompleted('compliance') || !isSectionCompleted('contact')}
+              onClick={() => {
+                if (allSectionsCompleted) {
+                  toast.success('All sections completed! Moving to next step...');
+                  setTimeout(nextStep, 1500); // Give time for toast to show
+                } else {
+                  nextStep();
+                }
+              }}
+              disabled={!allSectionsCompleted}
               className={`inline-flex items-center justify-center w-64 px-6 py-3 border border-transparent shadow-sm text-base font-medium text-white ${
                 isSectionCompleted('organization') && isSectionCompleted('compliance') && isSectionCompleted('contact')
                   ? 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'

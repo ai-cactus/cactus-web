@@ -1,16 +1,49 @@
-import React, { useState } from 'react';
-import { ChevronDown, ArrowLeft, Check } from 'lucide-react';
+'use client';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useOnboarding } from './context';
+import { ChevronDown, ArrowLeft, Check } from 'lucide-react';
+
+interface CompletionState {
+  organization: boolean;
+  team: boolean;
+  plan: boolean;
+}
 
 const Step1BasicInfo: React.FC = () => {
   const { nextStep, prevStep } = useOnboarding();
-  const [completedSteps, setCompletedSteps] = useState({
-    organization: false,
-    team: false,
-    plan: false
+  const router = useRouter();
+  const [completedSteps, setCompletedSteps] = useState<CompletionState>(() => {
+    if (typeof window !== 'undefined') {
+      const savedSteps = localStorage.getItem('completedSteps');
+      return savedSteps 
+        ? JSON.parse(savedSteps) 
+        : { organization: false, team: false, plan: false };
+    }
+    return { organization: false, team: false, plan: false };
   });
+  
+  // Update completion state when component mounts or localStorage changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedSteps = localStorage.getItem('completedSteps');
+      if (savedSteps) {
+        setCompletedSteps(JSON.parse(savedSteps));
+      }
+    }
+    
+    // Listen for storage events to update state when changed in another tab
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'completedSteps' && e.newValue) {
+        setCompletedSteps(JSON.parse(e.newValue));
+      }
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
-  const handleStepClick = (step: string) => {
+  const handleStepClick = (step: keyof CompletionState) => {
     if (step === 'organization') {
       // Mark organization step as completed and move to next step
       setCompletedSteps(prev => ({
@@ -22,7 +55,7 @@ const Step1BasicInfo: React.FC = () => {
       // For other steps, just mark as completed
       setCompletedSteps(prev => ({
         ...prev,
-        [step]: !prev[step as keyof typeof prev]
+        [step]: !prev[step]
       }));
     }
   };
@@ -75,10 +108,10 @@ const Step1BasicInfo: React.FC = () => {
           </div>
         </div>
 
-        {/* Build your Team */}
+        {/* Build your Model */}
         <div 
           className="w-full bg-white rounded-lg border border-gray-200 p-8 cursor-pointer hover:border-gray-300 transition-colors"
-          onClick={() => handleStepClick('team')}
+          onClick={() => router.push('/profile/health-service-provider/steps?step=3')}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -97,10 +130,10 @@ const Step1BasicInfo: React.FC = () => {
           </div>
         </div>
 
-        {/* Selected Plan */}
+        {/* Plan */}
         <div 
           className="w-full bg-white rounded-lg border border-gray-200 p-8 cursor-pointer hover:border-gray-300 transition-colors"
-          onClick={() => handleStepClick('plan')}
+          onClick={() => router.push('/profile/health-service-provider/steps?step=4')}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">

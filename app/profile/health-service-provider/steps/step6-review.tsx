@@ -1,3 +1,4 @@
+'use client';
 // // Temporarily commented out to resolve TypeScript errors
 // /*
 // import { Checkbox } from '@/components/ui/checkbox';

@@ -1,12 +1,15 @@
 'use client';
 
-import { OnboardingProvider } from './steps/context';
-import OnboardingFlow from './onboarding-flow';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function HealthServiceProviderProfile() {
-  return (
-    <OnboardingProvider>
-      <OnboardingFlow />
-    </OnboardingProvider>
-  );
+  const router = useRouter();
+
+  // Redirect to the first step
+  useEffect(() => {
+    router.push('/profile/health-service-provider/steps?step=1');
+  }, [router]);
+
+  return null;
 }
